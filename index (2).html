@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Megan & Ben — March 13, 2027</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&family=Great+Vibes&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blush:    #f0e0d6;
+      --rose:     #c9877a;
+      --mauve:    #9b6b6b;
+      --sage:     #8a9e85;
+      --cream:    #fdf7f2;
+      --deep:     #3a2e2e;
+      --gold:     #c4a97d;
+      --white:    #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Jost', sans-serif;
+      background: var(--cream);
+      color: var(--deep);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex; justify-content: center; gap: 2.5rem;
+      padding: 1.1rem 2rem;
+      background: rgba(253,247,242,0.85);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(196,169,125,0.2);
+    }
+    nav a {
+      text-decoration: none;
+      font-family: 'Jost', sans-serif;
+      font-weight: 400;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--mauve);
+      transition: color 0.25s;
+    }
+    nav a:hover { color: var(--rose); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 6rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+      background: var(--cream);
+    }
+
+    /* Decorative petal blobs */
+    #hero::before, #hero::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.18;
+    }
+    #hero::before {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, var(--rose), transparent 70%);
+      top: -120px; left: -150px;
+    }
+    #hero::after {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, var(--sage), transparent 70%);
+      bottom: -80px; right: -100px;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.2rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.2s forwards;
+    }
+
+    .hero-names {
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(4rem, 12vw, 8rem);
+      color: var(--deep);
+      line-height: 1.1;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.4s forwards;
+    }
+
+    .hero-ampersand {
+      color: var(--rose);
+    }
+
+    .hero-divider {
+      display: flex; align-items: center; gap: 1rem;
+      margin: 1.5rem auto;
+      width: 280px;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.6s forwards;
+    }
+    .hero-divider span { flex: 1; height: 1px; background: var(--gold); opacity: 0.5; }
+    .hero-divider svg { color: var(--rose); flex-shrink: 0; }
+
+    .hero-date {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      font-style: italic;
+      color: var(--mauve);
+      letter-spacing: 0.08em;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.7s forwards;
+    }
+
+    .hero-venue {
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-top: 0.5rem;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.85s forwards;
+    }
+
+    .countdown {
+      display: flex; gap: 2rem;
+      margin-top: 3rem;
+      opacity: 0;
+      animation: fadeUp 0.9s 1.1s forwards;
+    }
+    .countdown-unit { text-align: center; }
+    .countdown-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.8rem;
+      font-weight: 300;
+      color: var(--deep);
+      line-height: 1;
+    }
+    .countdown-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-top: 0.3rem;
+    }
+
+    .scroll-hint {
+      position: absolute; bottom: 2rem;
+      display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+      opacity: 0;
+      animation: fadeUp 0.9s 1.5s forwards;
+    }
+    .scroll-hint span { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); }
+    .scroll-arrow { width: 1px; height: 40px; background: var(--gold); animation: scrollPulse 1.5s infinite; }
+
+    /* ── SECTIONS ── */
+    section { padding: 6rem 2rem; }
+
+    .section-inner { max-width: 860px; margin: 0 auto; }
+    .section-inner-wide { max-width: 1100px; margin: 0 auto; }
+
+    .section-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-align: center;
+      margin-bottom: 0.6rem;
+    }
+    .section-title {
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      color: var(--deep);
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+    .section-rule {
+      display: block;
+      width: 60px; height: 1px;
+      background: var(--gold);
+      margin: 0 auto 3rem;
+      opacity: 0.6;
+    }
+
+    /* ── OUR STORY ── */
+    #story { background: var(--white); }
+    .story-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      line-height: 1.9;
+      color: var(--deep);
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto;
+      font-style: italic;
+    }
+    .story-text + .story-text { margin-top: 1.5rem; }
+
+    /* ── SCHEDULE ── */
+    #schedule { background: var(--blush); }
+    .timeline {
+      max-width: 560px;
+      margin: 0 auto;
+      position: relative;
+      padding-left: 2rem;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute; left: 0; top: 0; bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, var(--rose) 10%, var(--rose) 90%, transparent);
+      opacity: 0.4;
+    }
+    .timeline-item {
+      position: relative;
+      padding: 0 0 2.5rem 2rem;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute; left: -4px; top: 6px;
+      width: 9px; height: 9px;
+      border-radius: 50%;
+      background: var(--rose);
+      border: 2px solid var(--cream);
+    }
+    .timeline-time {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.3rem;
+    }
+    .timeline-event {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--deep);
+    }
+    .timeline-desc {
+      font-size: 0.85rem;
+      color: var(--mauve);
+      margin-top: 0.2rem;
+      line-height: 1.6;
+    }
+
+    /* ── TRAVEL ── */
+    #travel { background: var(--white); }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+    .card {
+      border: 1px solid rgba(196,169,125,0.25);
+      border-radius: 2px;
+      padding: 2rem;
+      background: var(--cream);
+      transition: box-shadow 0.25s, transform 0.25s;
+    }
+    .card:hover { box-shadow: 0 8px 30px rgba(155,107,107,0.12); transform: translateY(-2px); }
+    .card-icon { font-size: 1.5rem; margin-bottom: 0.8rem; }
+    .card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--deep);
+      margin-bottom: 0.5rem;
+    }
+    .card-body { font-size: 0.85rem; line-height: 1.7; color: var(--mauve); }
+    .card-link {
+      display: inline-block;
+      margin-top: 0.8rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--rose);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(201,135,122,0.4);
+      padding-bottom: 1px;
+      transition: color 0.2s;
+    }
+    .card-link:hover { color: var(--mauve); }
+
+    /* ── REGISTRY ── */
+    #registry { background: var(--blush); }
+    .registry-intro {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.15rem;
+      color: var(--mauve);
+      text-align: center;
+      max-width: 560px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.8;
+    }
+    .registry-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
+    .registry-btn {
+      display: inline-block;
+      padding: 0.8rem 2.2rem;
+      border: 1px solid var(--rose);
+      color: var(--rose);
+      text-decoration: none;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      border-radius: 1px;
+      transition: background 0.25s, color 0.25s;
+    }
+    .registry-btn:hover { background: var(--rose); color: var(--white); }
+    .registry-btn.filled { background: var(--rose); color: var(--white); }
+    .registry-btn.filled:hover { background: var(--mauve); border-color: var(--mauve); }
+
+    /* ── RSVP ── */
+    #rsvp { background: var(--deep); }
+    #rsvp .section-label { color: var(--gold); }
+    #rsvp .section-title { color: var(--blush); }
+    #rsvp .section-rule { background: var(--gold); }
+
+    .rsvp-form {
+      max-width: 560px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+    .form-group label {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(196,169,125,0.3);
+      border-radius: 1px;
+      padding: 0.75rem 1rem;
+      color: var(--blush);
+      font-family: 'Jost', sans-serif;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: rgba(240,224,214,0.3); }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: var(--rose); }
+    .form-group select option { background: var(--deep); color: var(--blush); }
+    .form-group textarea { resize: vertical; min-height: 90px; }
+
+    .rsvp-submit {
+      display: block;
+      width: 100%;
+      padding: 1rem;
+      background: var(--rose);
+      color: var(--white);
+      border: none;
+      cursor: pointer;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      border-radius: 1px;
+      transition: background 0.25s;
+      margin-top: 0.5rem;
+    }
+    .rsvp-submit:hover { background: var(--mauve); }
+
+    .rsvp-note {
+      text-align: center;
+      font-size: 0.75rem;
+      color: rgba(240,224,214,0.45);
+      margin-top: 1rem;
+    }
+
+    .rsvp-success {
+      display: none;
+      text-align: center;
+      padding: 3rem 2rem;
+    }
+    .rsvp-success .success-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+    .rsvp-success h3 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2.5rem;
+      color: var(--blush);
+      margin-bottom: 0.5rem;
+    }
+    .rsvp-success p { color: rgba(240,224,214,0.6); font-size: 0.9rem; }
+
+    /* ── FAQ ── */
+    #faq { background: var(--white); }
+    .faq-list { max-width: 680px; margin: 0 auto; }
+    .faq-item {
+      border-bottom: 1px solid rgba(196,169,125,0.2);
+    }
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      text-align: left;
+      padding: 1.4rem 0;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--deep);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+    .faq-question:hover { color: var(--rose); }
+    .faq-chevron {
+      flex-shrink: 0;
+      color: var(--gold);
+      transition: transform 0.3s;
+      font-size: 0.8rem;
+    }
+    .faq-item.open .faq-chevron { transform: rotate(180deg); }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease, padding 0.35s;
+    }
+    .faq-item.open .faq-answer { max-height: 300px; padding-bottom: 1.4rem; }
+    .faq-answer p {
+      font-size: 0.9rem;
+      line-height: 1.8;
+      color: var(--mauve);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--deep);
+      text-align: center;
+      padding: 3rem 2rem;
+    }
+    footer .footer-names {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2.5rem;
+      color: var(--blush);
+      margin-bottom: 0.5rem;
+    }
+    footer p {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0.6;
+    }
+
+    /* ── FLOATING PETALS ── */
+    .petal {
+      position: fixed;
+      pointer-events: none;
+      z-index: 0;
+      border-radius: 50% 0 50% 0;
+      opacity: 0;
+      animation: petalFall linear infinite;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(0.8); }
+      50% { opacity: 1; transform: scaleY(1); }
+    }
+    @keyframes petalFall {
+      0%   { opacity: 0; transform: translateY(-20px) rotate(0deg); }
+      10%  { opacity: 0.6; }
+      90%  { opacity: 0.4; }
+      100% { opacity: 0; transform: translateY(100vh) rotate(360deg); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      nav { gap: 1.2rem; flex-wrap: wrap; }
+      .form-row { grid-template-columns: 1fr; }
+      .countdown { gap: 1.2rem; }
+      .countdown-num { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#story">Our Story</a>
+    <a href="#schedule">Schedule</a>
+    <a href="#travel">Travel</a>
+    <a href="#registry">Registry</a>
+    <a href="#rsvp">RSVP</a>
+    <a href="#faq">FAQ</a>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <p class="hero-eyebrow">We're getting married</p>
+    <h1 class="hero-names">
+      Megan <span class="hero-ampersand">&</span> Ben
+    </h1>
+    <div class="hero-divider">
+      <span></span>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2C9 6 4 8 4 13a8 8 0 0016 0c0-5-5-7-8-11z"/>
+      </svg>
+      <span></span>
+    </div>
+    <p class="hero-date">Saturday, the Thirteenth of March, Two Thousand Twenty-Seven</p>
+    <p class="hero-venue">The White Room · St. Augustine, Florida</p>
+
+    <div class="countdown">
+      <div class="countdown-unit"><div class="countdown-num" id="cd-days">—</div><div class="countdown-label">Days</div></div>
+      <div class="countdown-unit"><div class="countdown-num" id="cd-hours">—</div><div class="countdown-label">Hours</div></div>
+      <div class="countdown-unit"><div class="countdown-num" id="cd-mins">—</div><div class="countdown-label">Minutes</div></div>
+      <div class="countdown-unit"><div class="countdown-num" id="cd-secs">—</div><div class="countdown-label">Seconds</div></div>
+    </div>
+
+    <div class="scroll-hint">
+      <span>Scroll</span>
+      <div class="scroll-arrow"></div>
+    </div>
+  </section>
+
+  <!-- OUR STORY -->
+  <section id="story">
+    <div class="section-inner">
+      <p class="section-label">How it began</p>
+      <h2 class="section-title">Our Story</h2>
+      <span class="section-rule"></span>
+      <p class="story-text">
+        Every love story is beautiful, but ours is our favorite. What started as a chance encounter grew into the greatest adventure of our lives — filled with laughter, late nights, and the kind of love that feels like coming home.
+      </p>
+      <p class="story-text" style="margin-top:1.5rem;">
+        After [X years] together, countless memories, and one unforgettable proposal, we can't wait to celebrate the next chapter surrounded by everyone we love most. We are so grateful you'll be there.
+      </p>
+    </div>
+  </section>
+
+  <!-- SCHEDULE -->
+  <section id="schedule">
+    <div class="section-inner">
+      <p class="section-label">The Big Day</p>
+      <h2 class="section-title">Schedule</h2>
+      <span class="section-rule"></span>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-time">4:00 PM</div>
+          <div class="timeline-event">Guest Arrival</div>
+          <div class="timeline-desc">Please arrive and find your seats. The White Room, St. Augustine, FL.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">4:30 PM</div>
+          <div class="timeline-event">Ceremony</div>
+          <div class="timeline-desc">The moment we've been waiting for. Join us as we say "I do."</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">5:00 PM</div>
+          <div class="timeline-event">Cocktail Hour</div>
+          <div class="timeline-desc">Drinks, passed bites, and good conversation while we take photos.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">6:00 PM</div>
+          <div class="timeline-event">Reception Dinner</div>
+          <div class="timeline-desc">Dinner, toasts, and dancing the night away.</div>
+        </div>
+        <div class="timeline-item" style="padding-bottom:0;">
+          <div class="timeline-time">10:00 PM</div>
+          <div class="timeline-event">Send-off</div>
+          <div class="timeline-desc">One last dance and a fond farewell.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRAVEL -->
+  <section id="travel">
+    <div class="section-inner">
+      <p class="section-label">Getting There</p>
+      <h2 class="section-title">Travel & Stay</h2>
+      <span class="section-rule"></span>
+      <div class="cards">
+        <div class="card">
+          <div class="card-icon">✈️</div>
+          <div class="card-title">Nearest Airport</div>
+          <div class="card-body">Jacksonville International Airport (JAX) is the closest major airport, about 45 minutes from St. Augustine. Daytona Beach (DAB) is also a solid option, roughly an hour south.</div>
+        </div>
+        <div class="card">
+          <div class="card-icon">🏨</div>
+          <div class="card-title">Where to Stay</div>
+          <div class="card-body">We recommend staying in Historic Downtown St. Augustine — you'll be steps from the venue and the charm of the city. We've reserved a room block at [Hotel Name] for our guests.<br><br>Use code <strong>[WITTSTEIN2027]</strong> when booking.</div>
+          <a href="#" class="card-link">Book Your Room →</a>
+        </div>
+        <div class="card">
+          <div class="card-icon">🗺️</div>
+          <div class="card-title">The Venue</div>
+          <div class="card-body">The White Room<br>1 King St, St. Augustine, FL 32084<br><br>Parking is available nearby at [Parking Garage Name]. We recommend arriving 15–20 minutes early.</div>
+          <a href="https://maps.google.com/?q=The+White+Room+St+Augustine+FL" target="_blank" class="card-link">Get Directions →</a>
+        </div>
+        <div class="card">
+          <div class="card-icon">🌴</div>
+          <div class="card-title">Explore St. Augustine</div>
+          <div class="card-body">Come early or stay late! St. Augustine is the oldest city in the US with incredible history, beaches, restaurants, and nightlife. A perfect excuse to extend the trip.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REGISTRY -->
+  <section id="registry">
+    <div class="section-inner">
+      <p class="section-label">Gifts</p>
+      <h2 class="section-title">Registry</h2>
+      <span class="section-rule"></span>
+      <p class="registry-intro">Your presence is truly the greatest gift. But if you'd like to celebrate us with something extra, we've registered at a few places we love.</p>
+      <div class="registry-links">
+        <a href="#" class="registry-btn filled">Zola</a>
+        <a href="#" class="registry-btn">Williams Sonoma</a>
+        <a href="#" class="registry-btn">Amazon</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- RSVP -->
+  <section id="rsvp">
+    <div class="section-inner">
+      <p class="section-label">Join Us</p>
+      <h2 class="section-title">RSVP</h2>
+      <span class="section-rule"></span>
+
+      <div id="rsvp-form-wrap">
+        <form class="rsvp-form" id="rsvp-form" onsubmit="handleRsvp(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fname">First Name</label>
+              <input type="text" id="fname" placeholder="Megan" required>
+            </div>
+            <div class="form-group">
+              <label for="lname">Last Name</label>
+              <input type="text" id="lname" placeholder="Hallson" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" placeholder="you@example.com" required>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="attending">Will You Attend?</label>
+              <select id="attending" required>
+                <option value="" disabled selected>Please select</option>
+                <option value="yes">Joyfully accepts</option>
+                <option value="no">Regretfully declines</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="guests">Number of Guests</label>
+              <select id="guests">
+                <option value="1">1 (Just me)</option>
+                <option value="2" selected>2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="dietary">Dietary Restrictions</label>
+            <input type="text" id="dietary" placeholder="Vegetarian, gluten-free, allergies, etc.">
+          </div>
+          <div class="form-group">
+            <label for="message">Message for the Couple</label>
+            <textarea id="message" placeholder="We'd love to hear from you…"></textarea>
+          </div>
+          <button type="submit" class="rsvp-submit">Send My RSVP</button>
+          <p class="rsvp-note">Kindly respond by January 13, 2027</p>
+        </form>
+      </div>
+
+      <div class="rsvp-success" id="rsvp-success">
+        <div class="success-icon">🌸</div>
+        <h3>We can't wait to see you!</h3>
+        <p>Your RSVP has been received. We'll be in touch with more details as the day approaches.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="section-inner">
+      <p class="section-label">Questions?</p>
+      <h2 class="section-title">FAQ</h2>
+      <span class="section-rule"></span>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            What is the dress code?
+            <span class="faq-chevron">▾</span>
+          </button>
+          <div class="faq-answer"><p>Cocktail attire is requested. Think elegant and festive — florals and fun colors are welcome and encouraged! Please avoid white, ivory, and champagne out of respect for the bride.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            Is the wedding indoors or outdoors?
+            <span class="faq-chevron">▾</span>
+          </button>
+          <div class="faq-answer"><p>The White Room is a beautiful indoor venue overlooking the Matanzas River. The ceremony and reception will both be held indoors, so no need to worry about the Florida weather!</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            Can I bring a plus-one?
+            <span class="faq-chevron">▾</span>
+          </button>
+          <div class="faq-answer"><p>We are working with a limited guest list. If your invitation includes a plus-one, it will be noted on your invitation. Please reach out to us directly if you have questions.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            Are children welcome?
+            <span class="faq-chevron">▾</span>
+          </button>
+          <div class="faq-answer"><p>We love your little ones! However, we have chosen to keep our wedding an adults-only evening. We hope this gives you a chance to enjoy a fun night out. We appreciate your understanding.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            Will there be transportation?
+            <span class="faq-chevron">▾</span>
+          </button>
+          <div class="faq-answer"><p>We are working on shuttle arrangements between the hotel block and The White Room. Details will be sent closer to the wedding date. Uber and Lyft are also readily available in St. Augustine.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            Who should I contact with questions?
+            <span class="faq-chevron">▾</span>
+          </button>
+          <div class="faq-answer"><p>Please reach out to our wedding coordinator at [coordinator@email.com], or contact [Maid of Honor / Best Man Name] at [phone number]. We don't want any wedding-day questions coming to Megan or Ben!</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-names">Megan & Ben</div>
+    <p>March 13, 2027 · St. Augustine, Florida</p>
+  </footer>
+
+  <script>
+    // Countdown Timer
+    function updateCountdown() {
+      const wedding = new Date('2027-03-13T16:30:00');
+      const now = new Date();
+      const diff = wedding - now;
+      if (diff <= 0) {
+        document.getElementById('cd-days').textContent = '0';
+        document.getElementById('cd-hours').textContent = '0';
+        document.getElementById('cd-mins').textContent = '0';
+        document.getElementById('cd-secs').textContent = '0';
+        return;
+      }
+      const d = Math.floor(diff / 86400000);
+      const h = Math.floor((diff % 86400000) / 3600000);
+      const m = Math.floor((diff % 3600000) / 60000);
+      const s = Math.floor((diff % 60000) / 1000);
+      document.getElementById('cd-days').textContent = d;
+      document.getElementById('cd-hours').textContent = String(h).padStart(2,'0');
+      document.getElementById('cd-mins').textContent = String(m).padStart(2,'0');
+      document.getElementById('cd-secs').textContent = String(s).padStart(2,'0');
+    }
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    // RSVP Form
+    function handleRsvp(e) {
+      e.preventDefault();
+      document.getElementById('rsvp-form-wrap').style.display = 'none';
+      const success = document.getElementById('rsvp-success');
+      success.style.display = 'block';
+      // In production, connect to Formspree, Netlify Forms, etc.
+    }
+
+    // FAQ Accordion
+    function toggleFaq(btn) {
+      const item = btn.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    }
+
+    // Floating Petals
+    function createPetal() {
+      const petal = document.createElement('div');
+      petal.className = 'petal';
+      const size = Math.random() * 12 + 6;
+      const hue = Math.random() > 0.5 ? '#f0c5bb' : '#c9d8b6';
+      petal.style.cssText = `
+        width:${size}px; height:${size}px;
+        background:${hue};
+        left:${Math.random()*100}vw;
+        top:-20px;
+        animation-duration:${Math.random()*8+6}s;
+        animation-delay:${Math.random()*4}s;
+      `;
+      document.body.appendChild(petal);
+      setTimeout(() => petal.remove(), 14000);
+    }
+    setInterval(createPetal, 800);
+  </script>
+</body>
+</html>
