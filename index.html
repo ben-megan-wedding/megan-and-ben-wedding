@@ -396,6 +396,62 @@
       margin-top: 1rem;
     }
 
+    /* ── GUEST CARDS ── */
+    .guest-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(196,169,125,0.2);
+      border-radius: 2px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .guest-card-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--blush);
+      margin-bottom: 1rem;
+      letter-spacing: 0.03em;
+    }
+    .guest-card-name input {
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid rgba(196,169,125,0.4);
+      color: var(--blush);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      width: 100%;
+      outline: none;
+      padding-bottom: 2px;
+    }
+    .guest-card-name input::placeholder { color: rgba(240,224,214,0.3); }
+    .guest-card-fields { display: grid; grid-template-columns: auto 1fr; gap: 0.8rem 1.5rem; align-items: center; }
+    .attending-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .attending-toggle {
+      display: flex;
+      gap: 0.6rem;
+    }
+    .attend-btn {
+      padding: 0.45rem 1.2rem;
+      border: 1px solid rgba(196,169,125,0.3);
+      background: transparent;
+      color: rgba(240,224,214,0.5);
+      font-family: 'Jost', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-radius: 1px;
+      transition: all 0.2s;
+    }
+    .attend-btn.selected-yes { background: var(--sage); border-color: var(--sage); color: white; }
+    .attend-btn.selected-no  { background: var(--mauve); border-color: var(--mauve); color: white; }
+
     .rsvp-success {
       display: none;
       text-align: center;
@@ -654,54 +710,48 @@
       <h2 class="section-title">RSVP</h2>
       <span class="section-rule"></span>
 
-      <div id="rsvp-form-wrap">
-        <form class="rsvp-form" id="rsvp-form" onsubmit="handleRsvp(event)">
-          <div class="form-row">
-            <div class="form-group">
-              <label for="fname">First Name</label>
-              <input type="text" id="fname" placeholder="Megan" required>
-            </div>
-            <div class="form-group">
-              <label for="lname">Last Name</label>
-              <input type="text" id="lname" placeholder="Hallson" required>
-            </div>
-          </div>
+      <!-- Step 1: Code Entry -->
+      <div id="rsvp-code-step">
+        <p style="text-align:center; font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.1rem; color:rgba(240,224,214,0.7); margin-bottom:2rem; max-width:480px; margin-left:auto; margin-right:auto; line-height:1.7;">
+          Enter the RSVP code from your invitation to get started.
+        </p>
+        <div class="rsvp-form" style="max-width:380px;">
           <div class="form-group">
-            <label for="email">Email Address</label>
-            <input type="email" id="email" placeholder="you@example.com" required>
+            <label for="rsvp-code">Your RSVP Code</label>
+            <input type="text" id="rsvp-code" placeholder="e.g. WEINERFAM" style="text-transform:uppercase; letter-spacing:0.1em;" onkeydown="if(event.key==='Enter') lookupCode()">
           </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label for="attending">Will You Attend?</label>
-              <select id="attending" required>
-                <option value="" disabled selected>Please select</option>
-                <option value="yes">Joyfully accepts</option>
-                <option value="no">Regretfully declines</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="guests">Number of Guests</label>
-              <select id="guests">
-                <option value="1">1 (Just me)</option>
-                <option value="2" selected>2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-              </select>
-            </div>
+          <div id="rsvp-code-error" style="display:none; color:#e08080; font-size:0.8rem; margin-top:-0.5rem; text-align:center;">
+            That code wasn't found. Please check your invitation and try again.
           </div>
-          <div class="form-group">
-            <label for="dietary">Dietary Restrictions</label>
-            <input type="text" id="dietary" placeholder="Vegetarian, gluten-free, allergies, etc.">
-          </div>
-          <div class="form-group">
-            <label for="message">Message for the Couple</label>
-            <textarea id="message" placeholder="We'd love to hear from you…"></textarea>
-          </div>
-          <button type="submit" class="rsvp-submit">Send My RSVP</button>
+          <button class="rsvp-submit" onclick="lookupCode()">Find My Invitation</button>
           <p class="rsvp-note">Kindly respond by January 13, 2027</p>
-        </form>
+        </div>
       </div>
 
+      <!-- Step 2: Guest Cards -->
+      <div id="rsvp-guests-step" style="display:none;">
+        <div id="rsvp-loading" style="text-align:center; color:rgba(240,224,214,0.5); font-style:italic; padding:2rem;">
+          Loading your invitation…
+        </div>
+        <div id="rsvp-guest-cards" style="display:none;">
+          <p style="text-align:center; font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.05rem; color:rgba(240,224,214,0.7); margin-bottom:2rem; line-height:1.7;">
+            Please fill out each guest below, then leave us a note before submitting.
+          </p>
+          <div id="guest-cards-container"></div>
+
+          <!-- Shared message -->
+          <div class="rsvp-form" style="margin-top:1.5rem;">
+            <div class="form-group">
+              <label for="group-message">Message for the Bride & Groom</label>
+              <textarea id="group-message" placeholder="We'd love to hear from you…"></textarea>
+            </div>
+            <button class="rsvp-submit" onclick="submitRsvp()">Send Our RSVPs</button>
+            <p class="rsvp-note">Kindly respond by January 13, 2027</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3: Success -->
       <div class="rsvp-success" id="rsvp-success">
         <div class="success-icon">🌸</div>
         <h3>We can't wait to see you!</h3>
@@ -757,7 +807,7 @@
             Who should I contact with questions?
             <span class="faq-chevron">▾</span>
           </button>
-          <div class="faq-answer"><p>Please reach out to our wedding coordinator at [coordinator@email.com], or contact [Maid of Honor / Best Man Name] at [phone number]. We don't want any wedding-day questions coming to Megan or Ben!</p></div>
+          <div class="faq-answer"><p>Please reach out to our wedding coordinator at [<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="9efdf1f1ecfaf7f0ffeaf1ecdefbf3fff7f2b0fdf1f3">[email&#160;protected]</a>], or contact [Maid of Honor / Best Man Name] at [phone number]. We don't want any wedding-day questions coming to Megan or Ben!</p></div>
         </div>
       </div>
     </div>
@@ -769,7 +819,7 @@
     <p>March 13, 2027 · St. Augustine, Florida</p>
   </footer>
 
-  <script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     // Countdown Timer
     function updateCountdown() {
       const wedding = new Date('2027-03-13T16:30:00');
@@ -794,13 +844,128 @@
     updateCountdown();
     setInterval(updateCountdown, 1000);
 
-    // RSVP Form
-    function handleRsvp(e) {
-      e.preventDefault();
-      document.getElementById('rsvp-form-wrap').style.display = 'none';
-      const success = document.getElementById('rsvp-success');
-      success.style.display = 'block';
-      // In production, connect to Formspree, Netlify Forms, etc.
+    // ── RSVP SYSTEM ──
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwqelWv1lYUvM7ZOQSlSN_omIlESt6h-LsyHG-VxsTrMPGZ18K72Srf_r0y2fdhQolc/exec';
+    let currentCode = '';
+    let guestData = [];
+
+    async function lookupCode() {
+      const code = document.getElementById('rsvp-code').value.trim().toUpperCase();
+      if (!code) return;
+      document.getElementById('rsvp-code-error').style.display = 'none';
+
+      // Show loading state
+      document.getElementById('rsvp-code-step').style.display = 'none';
+      document.getElementById('rsvp-guests-step').style.display = 'block';
+      document.getElementById('rsvp-loading').style.display = 'block';
+      document.getElementById('rsvp-guest-cards').style.display = 'none';
+
+      try {
+        const res = await fetch(`${SCRIPT_URL}?code=${encodeURIComponent(code)}`);
+        const data = await res.json();
+
+        if (!data.found) {
+          document.getElementById('rsvp-guests-step').style.display = 'none';
+          document.getElementById('rsvp-code-step').style.display = 'block';
+          document.getElementById('rsvp-code-error').style.display = 'block';
+          return;
+        }
+
+        currentCode = data.code;
+        guestData = data.attendees;
+        renderGuestCards(data.attendees);
+
+        document.getElementById('rsvp-loading').style.display = 'none';
+        document.getElementById('rsvp-guest-cards').style.display = 'block';
+
+      } catch (err) {
+        document.getElementById('rsvp-guests-step').style.display = 'none';
+        document.getElementById('rsvp-code-step').style.display = 'block';
+        document.getElementById('rsvp-code-error').textContent = 'Something went wrong. Please try again.';
+        document.getElementById('rsvp-code-error').style.display = 'block';
+      }
+    }
+
+    function renderGuestCards(attendees) {
+      const container = document.getElementById('guest-cards-container');
+      container.innerHTML = '';
+      attendees.forEach((name, i) => {
+        const isPlus = name.toString().toUpperCase() === 'PLUS1' || name === '';
+        const card = document.createElement('div');
+        card.className = 'guest-card';
+        card.innerHTML = `
+          <div class="guest-card-name">
+            ${isPlus
+              ? `<input type="text" id="guest-name-${i}" placeholder="Guest name (plus-one)" />`
+              : `<span>${name}</span><input type="hidden" id="guest-name-${i}" value="${name}" />`
+            }
+          </div>
+          <div class="guest-card-fields">
+            <span class="attending-label">Attending?</span>
+            <div class="attending-toggle">
+              <button type="button" class="attend-btn" id="btn-yes-${i}" onclick="setAttending(${i}, 'Yes')">✓ Yes</button>
+              <button type="button" class="attend-btn" id="btn-no-${i}"  onclick="setAttending(${i}, 'No')">✗ No</button>
+            </div>
+            <span class="attending-label">Dietary</span>
+            <input type="text" id="dietary-${i}" placeholder="None, vegetarian, gluten-free…"
+              style="background:rgba(255,255,255,0.05); border:1px solid rgba(196,169,125,0.2); border-radius:1px; padding:0.5rem 0.8rem; color:var(--blush); font-family:'Jost',sans-serif; font-size:0.85rem; outline:none;">
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function setAttending(i, value) {
+      document.getElementById(`btn-yes-${i}`).className = 'attend-btn' + (value === 'Yes' ? ' selected-yes' : '');
+      document.getElementById(`btn-no-${i}`).className  = 'attend-btn' + (value === 'No'  ? ' selected-no'  : '');
+      document.getElementById(`btn-yes-${i}`).dataset.selected = value === 'Yes' ? 'yes' : '';
+      document.getElementById(`btn-no-${i}`).dataset.selected  = value === 'No'  ? 'no'  : '';
+    }
+
+    async function submitRsvp() {
+      const guests = [];
+      let valid = true;
+
+      guestData.forEach((_, i) => {
+        const nameEl = document.getElementById(`guest-name-${i}`);
+        const name = nameEl.value.trim();
+        const yesBtn = document.getElementById(`btn-yes-${i}`);
+        const noBtn  = document.getElementById(`btn-no-${i}`);
+        const attending = yesBtn.classList.contains('selected-yes') ? 'Yes'
+                        : noBtn.classList.contains('selected-no')   ? 'No'
+                        : '';
+        const dietary = document.getElementById(`dietary-${i}`).value.trim();
+
+        if (!name || !attending) { valid = false; }
+        guests.push({ name, attending, dietary });
+      });
+
+      if (!valid) {
+        alert('Please make sure every guest has a name and an attending response.');
+        return;
+      }
+
+      const message = document.getElementById('group-message').value.trim();
+      const submitBtn = document.querySelector('#rsvp-guests-step .rsvp-submit');
+      submitBtn.textContent = 'Sending…';
+      submitBtn.disabled = true;
+
+      try {
+        await fetch(SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ code: currentCode, guests, message })
+        });
+
+        document.getElementById('rsvp-guests-step').style.display = 'none';
+        document.getElementById('rsvp-success').style.display = 'block';
+
+      } catch (err) {
+        submitBtn.textContent = 'Send Our RSVPs';
+        submitBtn.disabled = false;
+        alert('Something went wrong. Please try again or contact us directly.');
+      }
     }
 
     // FAQ Accordion
@@ -822,13 +987,4 @@
         background:${hue};
         left:${Math.random()*100}vw;
         top:-20px;
-        animation-duration:${Math.random()*8+6}s;
-        animation-delay:${Math.random()*4}s;
-      `;
-      document.body.appendChild(petal);
-      setTimeout(() => petal.remove(), 14000);
-    }
-    setInterval(createPetal, 800);
-  </script>
-</body>
-</html>
+        animation-duration:$
