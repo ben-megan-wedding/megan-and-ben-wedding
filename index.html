@@ -117,10 +117,11 @@
 
     .hero-date {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.25rem;
-      font-style: italic;
-      color: var(--mauve);
-      letter-spacing: 0.08em;
+      font-size: 2rem;
+      font-style: normal;
+      font-weight: 600;
+      color: var(--deep);
+      letter-spacing: 0.15em;
       opacity: 0;
       animation: fadeUp 0.9s 0.7s forwards;
     }
@@ -260,9 +261,12 @@
     #travel { background: var(--white); }
     .cards {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      grid-template-columns: repeat(2, 1fr);
       gap: 1.5rem;
       margin-top: 1rem;
+    }
+    @media (max-width: 640px) {
+      .cards { grid-template-columns: 1fr; }
     }
     .card {
       border: 1px solid rgba(196,169,125,0.25);
@@ -567,7 +571,6 @@
 
   <!-- NAV -->
   <nav>
-    <a href="#story">Our Story</a>
     <a href="#schedule">Schedule</a>
     <a href="#travel">Travel</a>
     <a href="#registry">Registry</a>
@@ -588,7 +591,7 @@
       </svg>
       <span></span>
     </div>
-    <p class="hero-date">Saturday, the Thirteenth of March, Two Thousand Twenty-Seven</p>
+    <p class="hero-date"><strong>03 · 13 · 2027</strong></p>
     <p class="hero-venue">The White Room · St. Augustine, Florida</p>
 
     <div class="countdown">
@@ -601,21 +604,6 @@
     <div class="scroll-hint">
       <span>Scroll</span>
       <div class="scroll-arrow"></div>
-    </div>
-  </section>
-
-  <!-- OUR STORY -->
-  <section id="story">
-    <div class="section-inner">
-      <p class="section-label">How it began</p>
-      <h2 class="section-title">Our Story</h2>
-      <span class="section-rule"></span>
-      <p class="story-text">
-        Every love story is beautiful, but ours is our favorite. What started as a chance encounter grew into the greatest adventure of our lives — filled with laughter, late nights, and the kind of love that feels like coming home.
-      </p>
-      <p class="story-text" style="margin-top:1.5rem;">
-        After [X years] together, countless memories, and one unforgettable proposal, we can't wait to celebrate the next chapter surrounded by everyone we love most. We are so grateful you'll be there.
-      </p>
     </div>
   </section>
 
@@ -657,7 +645,7 @@
 
   <!-- TRAVEL -->
   <section id="travel">
-    <div class="section-inner">
+    <div class="section-inner-wide">
       <p class="section-label">Getting There</p>
       <h2 class="section-title">Travel & Stay</h2>
       <span class="section-rule"></span>
@@ -668,16 +656,23 @@
           <div class="card-body">Jacksonville International Airport (JAX) is the closest major airport, about 45 minutes from St. Augustine. Daytona Beach (DAB) is also a solid option, roughly an hour south.</div>
         </div>
         <div class="card">
-          <div class="card-icon">🏨</div>
-          <div class="card-title">Where to Stay</div>
-          <div class="card-body">We recommend staying in Historic Downtown St. Augustine — you'll be steps from the venue and the charm of the city. We've reserved a room block at [Hotel Name] for our guests.<br><br>Use code <strong>[WITTSTEIN2027]</strong> when booking.</div>
-          <a href="#" class="card-link">Book Your Room →</a>
-        </div>
-        <div class="card">
           <div class="card-icon">🗺️</div>
           <div class="card-title">The Venue</div>
-          <div class="card-body">The White Room<br>1 King St, St. Augustine, FL 32084<br><br>Parking is available nearby at [Parking Garage Name]. We recommend arriving 15–20 minutes early.</div>
+          <div class="card-body">The White Room<br>1 King St, St. Augustine, FL 32084<br><br>Parking is available nearby. We recommend arriving 15–20 minutes early.</div>
           <a href="https://maps.google.com/?q=The+White+Room+St+Augustine+FL" target="_blank" class="card-link">Get Directions →</a>
+        </div>
+        <div class="card">
+          <div class="card-icon">🏨</div>
+          <div class="card-title">Where to Stay</div>
+          <div class="card-body">
+            We recommend staying in Historic Downtown St. Augustine — you'll be steps from the venue and all the charm of the city. A few of our favorites:
+            <ul style="list-style:none; margin-top:1rem; display:flex; flex-direction:column; gap:0.6rem;">
+              <li><a href="https://www.casamonica.com" target="_blank" class="card-link" style="display:inline;">Casa Monica Resort & Spa →</a><br><span style="font-size:0.78rem;">Historic luxury in the heart of downtown</span></li>
+              <li><a href="https://www.marriott.com/en-us/hotels/sghrn-renaissance-st-augustine-historic-district-hotel/overview/" target="_blank" class="card-link" style="display:inline;">Renaissance St. Augustine →</a><br><span style="font-size:0.78rem;">Modern comforts steps from the venue</span></li>
+              <li><a href="https://www.hilton.com/en/hotels/sgfahhf-hilton-st-augustine-historic-bayfront/" target="_blank" class="card-link" style="display:inline;">Hilton St. Augustine Historic Bayfront →</a><br><span style="font-size:0.78rem;">Beautiful bayfront views, easy walk to The White Room</span></li>
+              <li><a href="https://www.hyatt.com/en-US/hotel/florida/hyatt-place-st-augustine-historic-district/sgphp" target="_blank" class="card-link" style="display:inline;">Hyatt Place St. Augustine →</a><br><span style="font-size:0.78rem;">Great value in the historic district</span></li>
+            </ul>
+          </div>
         </div>
         <div class="card">
           <div class="card-icon">🌴</div>
@@ -694,12 +689,8 @@
       <p class="section-label">Gifts</p>
       <h2 class="section-title">Registry</h2>
       <span class="section-rule"></span>
-      <p class="registry-intro">Your presence is truly the greatest gift. But if you'd like to celebrate us with something extra, we've registered at a few places we love.</p>
-      <div class="registry-links">
-        <a href="#" class="registry-btn filled">Zola</a>
-        <a href="#" class="registry-btn">Williams Sonoma</a>
-        <a href="#" class="registry-btn">Amazon</a>
-      </div>
+      <p class="registry-intro">Your presence is truly the greatest gift. But if you'd like to celebrate us with something extra, registry links are on their way!</p>
+      <p style="text-align:center; font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.3rem; color:var(--rose); margin-top:1rem;">Links to come! 🎁</p>
     </div>
   </section>
 
@@ -772,21 +763,14 @@
             What is the dress code?
             <span class="faq-chevron">▾</span>
           </button>
-          <div class="faq-answer"><p>Cocktail attire is requested. Think elegant and festive — florals and fun colors are welcome and encouraged! Please avoid white, ivory, and champagne out of respect for the bride.</p></div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-question" onclick="toggleFaq(this)">
-            Is the wedding indoors or outdoors?
-            <span class="faq-chevron">▾</span>
-          </button>
-          <div class="faq-answer"><p>The White Room is a beautiful indoor venue overlooking the Matanzas River. The ceremony and reception will both be held indoors, so no need to worry about the Florida weather!</p></div>
+          <div class="faq-answer"><p>Black tie! We want to see you absolutely <em>stunning</em> — this is your excuse to go all out. Tuxedos, floor-length gowns, and your most dazzling self are strongly encouraged. (We will absolutely be judging. Lovingly, of course.) Please skip white, ivory, and champagne out of respect for the bride.</p></div>
         </div>
         <div class="faq-item">
           <button class="faq-question" onclick="toggleFaq(this)">
             Can I bring a plus-one?
             <span class="faq-chevron">▾</span>
           </button>
-          <div class="faq-answer"><p>We are working with a limited guest list. If your invitation includes a plus-one, it will be noted on your invitation. Please reach out to us directly if you have questions.</p></div>
+          <div class="faq-answer"><p>We are working with a limited guest list, so plus-ones are by invitation only. The good news: when you enter your RSVP code, you'll see exactly who is included in your invitation — no guessing required! If you have questions, feel free to reach out to us directly.</p></div>
         </div>
         <div class="faq-item">
           <button class="faq-question" onclick="toggleFaq(this)">
@@ -801,13 +785,6 @@
             <span class="faq-chevron">▾</span>
           </button>
           <div class="faq-answer"><p>We are working on shuttle arrangements between the hotel block and The White Room. Details will be sent closer to the wedding date. Uber and Lyft are also readily available in St. Augustine.</p></div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-question" onclick="toggleFaq(this)">
-            Who should I contact with questions?
-            <span class="faq-chevron">▾</span>
-          </button>
-          <div class="faq-answer"><p>Please reach out to our wedding coordinator at [<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="9efdf1f1ecfaf7f0ffeaf1ecdefbf3fff7f2b0fdf1f3">[email&#160;protected]</a>], or contact [Maid of Honor / Best Man Name] at [phone number]. We don't want any wedding-day questions coming to Megan or Ben!</p></div>
         </div>
       </div>
     </div>
