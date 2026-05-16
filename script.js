@@ -150,22 +150,3 @@ function toggleFaq(btn) {
   document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
   if (!isOpen) item.classList.add('open');
 }
-
-// Floating Petals
-function createPetal() {
-  const petal = document.createElement('div');
-  petal.className = 'petal';
-  const size = Math.random() * 12 + 6;
-  const hue = Math.random() > 0.5 ? '#b8a0cc' : '#7a9e76';
-  petal.style.cssText = `
-    width:${size}px; height:${size}px;
-    background:${hue};
-    left:${Math.random()*100}vw;
-    top:-20px;
-    animation-duration:${Math.random()*8+6}s;
-    animation-delay:${Math.random()*4}s;
-  `;
-  document.body.appendChild(petal);
-  setTimeout(() => petal.remove(), 14000);
-}
-setInterval(createPetal, 800);
