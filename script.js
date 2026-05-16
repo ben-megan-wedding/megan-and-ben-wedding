@@ -156,7 +156,7 @@ function createPetal() {
   const petal = document.createElement('div');
   petal.className = 'petal';
   const size = Math.random() * 12 + 6;
-  const hue = Math.random() > 0.5 ? '#f0c5bb' : '#c9d8b6';
+  const hue = Math.random() > 0.5 ? '#b8a0cc' : '#7a9e76';
   petal.style.cssText = `
     width:${size}px; height:${size}px;
     background:${hue};
