@@ -10,19 +10,23 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      /* ── Our palette ── */
-      --midnight:   #111827;   /* midnight blue – dark backgrounds */
-      --deep-plum:  #1e1428;   /* deep plum – richest dark */
-      --plum:       #5c3d6e;   /* plum purple – mid accent */
-      --orchid:     #7a4d94;   /* orchid purple – primary accent */
-      --orchid-lt:  #ddd0e8;   /* light orchid – text on dark */
-      --sage:       #7a9e76;   /* sage green */
-      --sage-dk:    #4e5e2e;   /* olive/dark sage */
-      --ice:        #b8cfe0;   /* ice blue – light accent */
-      --ice-lt:     #ddeef8;   /* very light ice */
-      --cream:      #eeeae4;   /* warm off-white */
+      --midnight:   #111827;
+      --deep-plum:  #1e1428;
+      --plum:       #5c3d6e;
+      --orchid:     #7a4d94;
+      --orchid-lt:  #ddd0e8;
+      --sage:       #7a9e76;
+      --sage-dk:    #4e5e2e;
+      --ice:        #b8cfe0;
+      --cream:      #eeeae4;
       --warm-white: #f7f4ee;
       --charcoal:   #2a2230;
+      /* St. Augustine warm tones */
+      --terracotta: #c4623a;
+      --amber:      #d4904a;
+      --gold-warm:  #c9a84c;
+      --moss:       #5a7a3a;
+      --bark:       #6b4c2a;
     }
 
     html { scroll-behavior: smooth; }
@@ -33,263 +37,264 @@
       overflow-x: hidden;
     }
 
-    /* ═══════════════════════════════════
-       NAV
-    ═══════════════════════════════════ */
+    /* ═══ NAV ═══ */
     nav {
       position: fixed; top: 0; left: 0; right: 0;
       z-index: 200;
       display: flex; justify-content: center; gap: 2.8rem;
-      padding: 1rem 2rem;
-      background: rgba(17,24,39,0.94);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(122,77,148,0.3);
+      padding: 0.9rem 2rem;
+      background: rgba(30,20,40,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(201,168,76,0.25);
     }
     nav a {
       text-decoration: none;
       font-family: 'IM Fell English', serif;
-      font-weight: 400;
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: var(--ice);
+      color: var(--gold-warm);
       transition: color 0.25s;
     }
-    nav a:hover { color: var(--orchid-lt); }
+    nav a:hover { color: #f0dfa0; }
 
     /* ═══════════════════════════════════
-       HERO — Curtain Reveal
+       HERO — St. Augustine Scene
     ═══════════════════════════════════ */
     #hero {
       min-height: 100vh;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      text-align: center;
       position: relative;
       overflow: hidden;
-      background: var(--deep-plum);
+      display: flex; align-items: center; justify-content: center;
+      text-align: center;
     }
 
-    /* Stage atmosphere */
-    .hero-stage {
+    /* Sky background: warm golden-hour dusk */
+    .hero-sky {
       position: absolute; inset: 0;
-      background:
-        radial-gradient(ellipse 55% 45% at 50% 65%, rgba(90,42,110,0.22) 0%, transparent 70%),
-        radial-gradient(ellipse 70% 35% at 50% 100%, rgba(122,158,118,0.08) 0%, transparent 60%),
-        var(--deep-plum);
+      background: linear-gradient(
+        175deg,
+        #1a1428 0%,
+        #2d1f3d 12%,
+        #4a2d5a 22%,
+        #7a4a3a 36%,
+        #b06030 48%,
+        #c8804a 58%,
+        #d4a060 68%,
+        #c89060 78%,
+        #a06840 88%,
+        #6a4028 100%
+      );
     }
 
-    /* Film grain */
-    .hero-grain {
-      position: absolute; inset: -50%;
-      width: 200%; height: 200%;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
-      opacity: 0.45;
-      pointer-events: none;
-      z-index: 1;
-      animation: grainShift 0.8s steps(1) infinite;
+    /* Bayfront water shimmer at bottom */
+    .hero-water {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 22%;
+      background: linear-gradient(
+        to bottom,
+        rgba(100,130,160,0.0) 0%,
+        rgba(80,110,150,0.5) 30%,
+        rgba(60,90,130,0.8) 70%,
+        rgba(40,65,100,0.95) 100%
+      );
     }
-    @keyframes grainShift {
-      0%  { transform: translate(0,0); }
-      25% { transform: translate(-2%,1%); }
-      50% { transform: translate(1%,-2%); }
-      75% { transform: translate(-1%,2%); }
+    /* Water reflection ripple lines */
+    .hero-water::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        180deg,
+        rgba(255,255,255,0.04) 0px,
+        rgba(255,255,255,0.04) 1px,
+        transparent 1px,
+        transparent 6px
+      );
     }
 
-    /* ── SVG Curtain ── */
-    .hero-curtain-svg {
+    /* Ground / embankment strip */
+    .hero-ground {
+      position: absolute;
+      bottom: 18%; left: 0; right: 0;
+      height: 40px;
+      background: linear-gradient(to bottom, #2a1e0e, #1a1208);
+    }
+
+    /* ── SVG scene: trees, moss, tile border ── */
+    .hero-svg {
       position: absolute; inset: 0;
       width: 100%; height: 100%;
-      z-index: 5;
       pointer-events: none;
     }
-    .curtain-left {
-      transform-origin: left center;
-      animation: curtainOpenLeft 2.8s cubic-bezier(0.4, 0, 0.2, 1) 1.2s forwards;
-    }
-    .curtain-right {
-      transform-origin: right center;
-      animation: curtainOpenRight 2.8s cubic-bezier(0.4, 0, 0.2, 1) 1.2s forwards;
-    }
-    @keyframes curtainOpenLeft  { 0% { transform: scaleX(1); } 100% { transform: scaleX(0.055); } }
-    @keyframes curtainOpenRight { 0% { transform: scaleX(1); } 100% { transform: scaleX(0.055); } }
 
-    .curtain-floor {
-      position: absolute; bottom: 0; left: 0; right: 0;
-      height: 60px;
-      background: linear-gradient(to top, rgba(10,8,20,0.7), transparent);
-      z-index: 4;
-    }
-
-    /* Hero Content */
+    /* Hero text content */
     .hero-content {
-      position: relative; z-index: 3;
+      position: relative; z-index: 10;
       display: flex; flex-direction: column; align-items: center;
-      padding: 6rem 2rem 4rem;
-      opacity: 0;
-      animation: contentReveal 1s ease 3.6s forwards;
+      padding: 5rem 2rem 3rem;
+      animation: fadeUp 1.4s ease 0.4s both;
     }
-    @keyframes contentReveal {
-      from { opacity: 0; transform: scale(0.97); }
-      to   { opacity: 1; transform: scale(1); }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
     .hero-eyebrow {
       font-family: 'IM Fell English', serif;
       font-style: italic;
-      font-size: 0.8rem;
-      letter-spacing: 0.38em;
+      font-size: 0.82rem;
+      letter-spacing: 0.4em;
       text-transform: uppercase;
-      color: var(--sage);
-      margin-bottom: 1.8rem;
-      text-shadow: 0 0 18px rgba(122,158,118,0.5);
+      color: #e8c88a;
+      margin-bottom: 1.6rem;
+      text-shadow: 0 1px 8px rgba(0,0,0,0.7);
     }
 
     .hero-rule {
       display: flex; align-items: center; gap: 0.7rem;
-      width: min(380px, 80vw);
-      margin-bottom: 1.6rem;
+      width: min(360px, 80vw);
+      margin-bottom: 1.4rem;
     }
     .hero-rule-line {
       flex: 1; height: 1px;
-      background: linear-gradient(90deg, transparent, var(--ice), transparent);
+      background: linear-gradient(90deg, transparent, #c9a84c, transparent);
     }
-    .hero-rule-ornament { color: var(--ice); font-size: 0.9rem; line-height: 1; }
+    .hero-rule-diamond {
+      width: 7px; height: 7px;
+      background: #c9a84c;
+      transform: rotate(45deg);
+      box-shadow: 0 0 6px rgba(201,168,76,0.6);
+    }
 
     .hero-names {
       font-family: 'Pinyon Script', cursive;
-      font-size: clamp(5.5rem, 15vw, 12rem);
-      font-weight: 400;
-      color: #f0edf8;
+      font-size: clamp(5.5rem, 14vw, 11rem);
+      color: #fdf8ee;
       line-height: 0.95;
-      letter-spacing: 0.01em;
       text-shadow:
-        0 0 80px rgba(184,207,224,0.2),
-        0 2px 10px rgba(10,8,20,0.98),
-        0 0 3px rgba(122,77,148,0.4);
+        0 2px 20px rgba(0,0,0,0.85),
+        0 0 60px rgba(180,120,40,0.3);
     }
-    .hero-ampersand { color: var(--ice); }
+    .hero-ampersand { color: #e8c070; }
 
     .hero-divider {
-      display: flex; flex-direction: column; align-items: center; gap: 4px;
-      margin: 2rem auto;
-      width: min(340px, 75vw);
+      display: flex; flex-direction: column; align-items: center; gap: 3px;
+      margin: 1.8rem auto;
+      width: min(300px, 70vw);
     }
-    .hero-divider-thick {
+    .hero-div-thick {
       width: 100%; height: 2px;
-      background: linear-gradient(90deg, transparent, var(--orchid) 15%, var(--ice) 50%, var(--orchid) 85%, transparent);
+      background: linear-gradient(90deg, transparent, #c9a84c 20%, #f0d88a 50%, #c9a84c 80%, transparent);
     }
-    .hero-divider-thin {
-      width: 80%; height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(184,207,224,0.45) 20%, rgba(184,207,224,0.45) 80%, transparent);
+    .hero-div-thin {
+      width: 78%; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(201,168,76,0.5) 20%, rgba(201,168,76,0.5) 80%, transparent);
     }
 
     .hero-date {
       font-family: 'IM Fell English', serif;
-      font-size: clamp(1.1rem, 2.8vw, 1.7rem);
-      letter-spacing: 0.38em;
-      color: var(--ice);
-      text-shadow: 0 0 18px rgba(184,207,224,0.35);
-      margin-bottom: 0.5rem;
+      font-size: clamp(1rem, 2.6vw, 1.6rem);
+      letter-spacing: 0.4em;
+      color: #e8d090;
+      text-shadow: 0 1px 10px rgba(0,0,0,0.8);
+      margin-bottom: 0.4rem;
     }
     .hero-venue {
       font-family: 'Cormorant Garamond', serif;
       font-style: italic;
       font-size: 0.95rem;
-      letter-spacing: 0.12em;
-      color: rgba(184,207,224,0.55);
-    }
-
-    .hero-bottom-rule {
-      display: flex; align-items: center; gap: 0.7rem;
-      width: min(380px, 80vw);
-      margin-top: 2rem;
+      letter-spacing: 0.1em;
+      color: rgba(240,220,170,0.7);
+      text-shadow: 0 1px 6px rgba(0,0,0,0.6);
     }
 
     .countdown {
-      display: flex; gap: 2.5rem;
+      display: flex; gap: 2.2rem;
       margin-top: 2.5rem;
     }
     .countdown-unit { text-align: center; }
     .countdown-num {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 2.6rem;
-      font-weight: 300;
-      color: #f0edf8;
+      font-size: 2.4rem; font-weight: 300;
+      color: #fdf8ee;
       line-height: 1;
-      text-shadow: 0 0 14px rgba(184,207,224,0.25);
+      text-shadow: 0 1px 8px rgba(0,0,0,0.7);
     }
     .countdown-label {
       font-family: 'IM Fell English', serif;
-      font-size: 0.52rem;
-      letter-spacing: 0.3em;
+      font-size: 0.5rem; letter-spacing: 0.3em;
       text-transform: uppercase;
-      color: var(--sage);
-      margin-top: 0.4rem;
-      opacity: 0.85;
+      color: #c9a84c; margin-top: 0.3rem;
     }
 
     .scroll-hint {
-      position: absolute; bottom: 2.2rem;
-      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
-      z-index: 3;
-      opacity: 0;
-      animation: fadeIn 1s 4.6s forwards;
+      position: absolute; bottom: 1.8rem;
+      display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+      z-index: 10;
+      animation: fadeUp 1s 2s both;
     }
     .scroll-hint span {
       font-family: 'IM Fell English', serif;
-      font-size: 0.5rem; letter-spacing: 0.35em;
-      text-transform: uppercase;
-      color: var(--ice); opacity: 0.55;
+      font-size: 0.48rem; letter-spacing: 0.35em;
+      text-transform: uppercase; color: #c9a84c; opacity: 0.7;
     }
     .scroll-arrow {
-      width: 1px; height: 32px;
-      background: linear-gradient(to bottom, var(--ice), transparent);
-      animation: scrollPulse 1.6s infinite;
+      width: 1px; height: 28px;
+      background: linear-gradient(to bottom, #c9a84c, transparent);
+      animation: scrollPulse 1.8s infinite;
     }
-    @keyframes fadeIn { to { opacity: 1; } }
+    @keyframes scrollPulse {
+      0%,100% { opacity: 0.3; } 50% { opacity: 1; }
+    }
+
+    /* ═══════════════════════════════════
+       MOSAIC TILE DIVIDER (between hero and sections)
+    ═══════════════════════════════════ */
+    .tile-band {
+      width: 100%;
+      height: 28px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+    }
+    .tile-band svg { width: 100%; height: 100%; }
 
     /* ═══════════════════════════════════
        SHARED SECTION STYLES
     ═══════════════════════════════════ */
-    section { padding: 6rem 2rem; }
+    section { padding: 5.5rem 2rem; }
     .section-inner { max-width: 860px; margin: 0 auto; }
     .section-inner-wide { max-width: 1080px; margin: 0 auto; }
 
     .section-label {
       font-family: 'IM Fell English', serif;
       font-style: italic;
-      font-size: 0.72rem;
-      letter-spacing: 0.3em;
+      font-size: 0.7rem; letter-spacing: 0.3em;
       text-transform: uppercase;
-      color: var(--sage-dk);
-      text-align: center;
-      margin-bottom: 0.5rem;
+      color: var(--terracotta);
+      text-align: center; margin-bottom: 0.4rem;
     }
     .section-title {
       font-family: 'Pinyon Script', cursive;
       font-size: clamp(2.8rem, 6vw, 4.5rem);
       color: var(--charcoal);
-      text-align: center;
-      line-height: 1.1;
-      margin-bottom: 0.5rem;
+      text-align: center; line-height: 1.1; margin-bottom: 0.5rem;
     }
     .section-rule-double {
       display: flex; flex-direction: column; align-items: center; gap: 3px;
-      margin: 0 auto 3rem;
-      width: 80px;
+      margin: 0 auto 3rem; width: 80px;
     }
-    .srd-thick { width: 100%; height: 2px; background: var(--orchid); opacity: 0.6; }
-    .srd-thin  { width: 75%; height: 1px; background: var(--plum); opacity: 0.4; }
+    .srd-thick { width: 100%; height: 2px; background: var(--gold-warm); opacity: 0.65; }
+    .srd-thin  { width: 75%; height: 1px; background: var(--amber);    opacity: 0.4; }
 
-    /* Dark section overrides */
-    .section-dark { background: var(--midnight); }
-    .section-dark .section-label { color: var(--sage); }
+    /* Dark section */
+    .section-dark { background: var(--charcoal); }
+    .section-dark .section-label { color: var(--gold-warm); }
     .section-dark .section-title { color: var(--orchid-lt); }
-    .section-dark .srd-thick { background: var(--ice); opacity: 0.5; }
-    .section-dark .srd-thin  { background: var(--ice); opacity: 0.25; }
+    .section-dark .srd-thick { background: var(--gold-warm); }
+    .section-dark .srd-thin  { background: var(--ice); opacity: 0.3; }
 
-    /* Light sections */
     .section-light { background: var(--warm-white); }
     .section-ivory { background: var(--cream); }
 
@@ -297,230 +302,176 @@
        SCHEDULE
     ═══════════════════════════════════ */
     .schedule-tba {
-      text-align: center;
-      padding: 2.8rem;
-      border: 1px solid rgba(122,77,148,0.3);
-      background: rgba(122,77,148,0.05);
-      margin: 0 auto;
-      max-width: 480px;
+      text-align: center; padding: 2.8rem;
+      border: 1px solid rgba(201,168,76,0.3);
+      background: rgba(201,168,76,0.05);
+      max-width: 480px; margin: 0 auto;
     }
     .schedule-tba-title {
       font-family: 'Pinyon Script', cursive;
-      font-size: 3rem;
-      color: var(--orchid-lt);
-      margin-bottom: 0.5rem;
+      font-size: 3rem; color: var(--orchid-lt); margin-bottom: 0.5rem;
     }
     .schedule-tba-sub {
-      font-family: 'IM Fell English', serif;
-      font-style: italic;
-      font-size: 0.78rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: rgba(184,207,224,0.5);
+      font-family: 'IM Fell English', serif; font-style: italic;
+      font-size: 0.78rem; letter-spacing: 0.22em;
+      text-transform: uppercase; color: rgba(201,168,76,0.6);
     }
 
     /* ═══════════════════════════════════
        TRAVEL CARDS
     ═══════════════════════════════════ */
     .cards {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1.5rem;
-      margin-top: 1rem;
+      display: grid; grid-template-columns: repeat(2,1fr);
+      gap: 1.5rem; margin-top: 1rem;
     }
     @media (max-width: 640px) { .cards { grid-template-columns: 1fr; } }
 
     .card {
-      border: 1px solid rgba(92,61,110,0.22);
-      padding: 2rem 2rem 1.8rem;
-      background: var(--warm-white);
+      border: 1px solid rgba(100,76,42,0.2);
+      padding: 2rem; background: var(--warm-white);
       position: relative;
       transition: box-shadow 0.3s, transform 0.3s;
     }
-    /* Inset decorative border */
     .card::before {
-      content: '';
-      position: absolute; top: 7px; left: 7px; right: 7px; bottom: 7px;
-      border: 1px solid rgba(122,77,148,0.1);
-      pointer-events: none;
+      content: ''; position: absolute;
+      top: 7px; left: 7px; right: 7px; bottom: 7px;
+      border: 1px solid rgba(201,168,76,0.12); pointer-events: none;
     }
-    .card:hover { box-shadow: 0 10px 40px rgba(30,20,40,0.1); transform: translateY(-2px); }
+    .card:hover { box-shadow: 0 10px 40px rgba(30,20,10,0.1); transform: translateY(-2px); }
     .card-icon { display: none; }
     .card-title {
       font-family: 'IM Fell English', serif;
-      font-size: 1rem;
-      font-weight: 400;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--plum);
-      margin-bottom: 0.8rem;
-      padding-bottom: 0.6rem;
-      border-bottom: 1px solid rgba(92,61,110,0.18);
+      font-size: 1rem; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--terracotta); margin-bottom: 0.8rem;
+      padding-bottom: 0.6rem; border-bottom: 1px solid rgba(196,98,58,0.18);
     }
     .card-body {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1rem;
-      line-height: 1.85;
-      color: #3d3045;
+      font-size: 1rem; line-height: 1.85; color: #3d3028;
     }
     .card-link {
-      display: inline-block;
-      margin-top: 0.9rem;
-      font-family: 'IM Fell English', serif;
-      font-style: italic;
-      font-size: 0.78rem;
-      letter-spacing: 0.08em;
-      color: var(--orchid);
-      text-decoration: none;
+      display: inline-block; margin-top: 0.9rem;
+      font-family: 'IM Fell English', serif; font-style: italic;
+      font-size: 0.78rem; letter-spacing: 0.08em;
+      color: var(--orchid); text-decoration: none;
       border-bottom: 1px solid rgba(122,77,148,0.3);
-      padding-bottom: 1px;
-      transition: color 0.2s, border-color 0.2s;
+      padding-bottom: 1px; transition: color 0.2s;
     }
-    .card-link:hover { color: var(--plum); border-color: var(--plum); }
+    .card-link:hover { color: var(--terracotta); border-color: var(--terracotta); }
 
     /* ═══════════════════════════════════
        REGISTRY
     ═══════════════════════════════════ */
     .registry-intro {
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-size: 1.2rem;
-      color: var(--orchid-lt);
-      text-align: center;
-      max-width: 560px;
-      margin: 0 auto;
-      line-height: 1.9;
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: 1.2rem; color: var(--orchid-lt);
+      text-align: center; max-width: 560px;
+      margin: 0 auto; line-height: 1.9;
     }
     .registry-coming {
       font-family: 'Pinyon Script', cursive;
-      font-size: 2.8rem;
-      color: var(--ice);
-      text-align: center;
-      margin-top: 1.5rem;
-      text-shadow: 0 0 20px rgba(184,207,224,0.3);
+      font-size: 2.8rem; color: var(--gold-warm);
+      text-align: center; margin-top: 1.5rem;
+      text-shadow: 0 0 20px rgba(201,168,76,0.3);
     }
 
     /* ═══════════════════════════════════
        RSVP
     ═══════════════════════════════════ */
-    #rsvp { background: var(--deep-plum); }
-    #rsvp .section-label { color: var(--sage); }
+    #rsvp { background: #1c1830; }
+    #rsvp .section-label { color: var(--gold-warm); }
     #rsvp .section-title { color: var(--orchid-lt); }
-    #rsvp .srd-thick { background: var(--orchid); opacity: 0.6; }
+    #rsvp .srd-thick { background: var(--gold-warm); opacity: 0.6; }
     #rsvp .srd-thin  { background: var(--ice); opacity: 0.3; }
 
     .rsvp-intro {
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-size: 1.05rem;
-      color: rgba(221,208,232,0.65);
-      text-align: center;
-      max-width: 480px;
-      margin: 0 auto 2rem;
-      line-height: 1.8;
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: 1.05rem; color: rgba(221,208,232,0.65);
+      text-align: center; max-width: 480px;
+      margin: 0 auto 2rem; line-height: 1.8;
     }
     .rsvp-form {
-      max-width: 520px;
-      margin: 0 auto;
+      max-width: 520px; margin: 0 auto;
       display: flex; flex-direction: column; gap: 1.2rem;
     }
     .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
     .form-group label {
-      font-family: 'IM Fell English', serif;
-      font-style: italic;
-      font-size: 0.7rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--ice);
+      font-family: 'IM Fell English', serif; font-style: italic;
+      font-size: 0.7rem; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--gold-warm);
     }
     .form-group input,
     .form-group select,
     .form-group textarea {
-      background: rgba(184,207,224,0.04);
-      border: 1px solid rgba(122,77,148,0.3);
-      padding: 0.75rem 1rem;
-      color: var(--orchid-lt);
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1rem;
-      outline: none;
-      transition: border-color 0.2s;
+      background: rgba(201,168,76,0.05);
+      border: 1px solid rgba(201,168,76,0.25);
+      padding: 0.75rem 1rem; color: var(--orchid-lt);
+      font-family: 'Cormorant Garamond', serif; font-size: 1rem;
+      outline: none; transition: border-color 0.2s;
     }
     .form-group input::placeholder,
     .form-group textarea::placeholder { color: rgba(221,208,232,0.28); font-style: italic; }
     .form-group input:focus,
     .form-group select:focus,
-    .form-group textarea:focus { border-color: var(--sage); }
-    .form-group select option { background: var(--deep-plum); color: var(--orchid-lt); }
+    .form-group textarea:focus { border-color: var(--gold-warm); }
+    .form-group select option { background: #1c1830; color: var(--orchid-lt); }
     .form-group textarea { resize: vertical; min-height: 90px; }
 
     .rsvp-submit {
-      display: block; width: 100%;
-      padding: 1rem;
-      background: transparent;
-      color: var(--ice);
-      border: 1px solid rgba(184,207,224,0.4);
+      display: block; width: 100%; padding: 1rem;
+      background: transparent; color: var(--gold-warm);
+      border: 1px solid rgba(201,168,76,0.5);
       cursor: pointer;
-      font-family: 'IM Fell English', serif;
-      font-style: italic;
-      font-size: 0.85rem;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      transition: background 0.3s, color 0.3s, border-color 0.3s;
-      margin-top: 0.5rem;
+      font-family: 'IM Fell English', serif; font-style: italic;
+      font-size: 0.85rem; letter-spacing: 0.28em; text-transform: uppercase;
+      transition: background 0.3s, color 0.3s; margin-top: 0.5rem;
     }
-    .rsvp-submit:hover { background: var(--orchid); color: white; border-color: var(--orchid); }
-
+    .rsvp-submit:hover { background: var(--gold-warm); color: #1c1830; }
     .rsvp-note {
-      text-align: center;
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-size: 0.85rem;
-      color: rgba(184,207,224,0.3);
-      margin-top: 0.5rem;
+      text-align: center; font-family: 'Cormorant Garamond', serif;
+      font-style: italic; font-size: 0.85rem; color: rgba(201,168,76,0.35);
     }
 
     /* Guest cards */
     .guest-card {
-      background: rgba(184,207,224,0.04);
-      border: 1px solid rgba(122,77,148,0.22);
-      padding: 1.5rem;
-      margin-bottom: 1rem;
+      background: rgba(201,168,76,0.04);
+      border: 1px solid rgba(201,168,76,0.18);
+      padding: 1.5rem; margin-bottom: 1rem;
     }
     .guest-card-name {
       font-family: 'Cormorant Garamond', serif;
       font-size: 1.15rem; font-weight: 600;
-      color: var(--orchid-lt);
-      margin-bottom: 1rem;
+      color: var(--orchid-lt); margin-bottom: 1rem;
     }
     .guest-card-name input {
       background: transparent; border: none;
-      border-bottom: 1px solid rgba(122,77,148,0.4);
+      border-bottom: 1px solid rgba(201,168,76,0.35);
       color: var(--orchid-lt);
       font-family: 'Cormorant Garamond', serif;
       font-size: 1.15rem; font-weight: 600;
       width: 100%; outline: none; padding-bottom: 2px;
     }
     .guest-card-name input::placeholder { color: rgba(221,208,232,0.28); }
-    .guest-card-fields { display: grid; grid-template-columns: auto 1fr; gap: 0.8rem 1.5rem; align-items: center; }
+    .guest-card-fields {
+      display: grid; grid-template-columns: auto 1fr;
+      gap: 0.8rem 1.5rem; align-items: center;
+    }
     .attending-label {
-      font-family: 'IM Fell English', serif;
-      font-style: italic;
+      font-family: 'IM Fell English', serif; font-style: italic;
       font-size: 0.65rem; letter-spacing: 0.2em;
-      text-transform: uppercase; color: var(--ice);
+      text-transform: uppercase; color: var(--gold-warm);
     }
     .attending-toggle { display: flex; gap: 0.6rem; }
     .attend-btn {
       padding: 0.45rem 1.2rem;
-      border: 1px solid rgba(122,77,148,0.28);
-      background: transparent;
-      color: rgba(221,208,232,0.45);
+      border: 1px solid rgba(201,168,76,0.25);
+      background: transparent; color: rgba(221,208,232,0.45);
       font-family: 'IM Fell English', serif;
       font-size: 0.72rem; letter-spacing: 0.12em;
-      text-transform: uppercase; cursor: pointer;
-      transition: all 0.2s;
+      text-transform: uppercase; cursor: pointer; transition: all 0.2s;
     }
     .attend-btn.selected-yes { background: var(--sage-dk); border-color: var(--sage-dk); color: white; }
-    .attend-btn.selected-no  { background: var(--plum); border-color: var(--plum); color: var(--orchid-lt); }
+    .attend-btn.selected-no  { background: var(--plum);    border-color: var(--plum);    color: var(--orchid-lt); }
 
     .rsvp-success { display: none; text-align: center; padding: 3rem 2rem; }
     .rsvp-success h3 {
@@ -533,67 +484,47 @@
        FAQ
     ═══════════════════════════════════ */
     .faq-list { max-width: 680px; margin: 0 auto; }
-    .faq-item { border-bottom: 1px solid rgba(92,61,110,0.2); }
+    .faq-item { border-bottom: 1px solid rgba(100,76,42,0.18); }
     .faq-question {
       width: 100%; background: none; border: none;
       text-align: left; padding: 1.4rem 0;
       font-family: 'IM Fell English', serif;
-      font-size: 1rem; font-weight: 400;
-      letter-spacing: 0.03em;
-      color: var(--charcoal); cursor: pointer;
+      font-size: 1rem; color: var(--charcoal); cursor: pointer;
       display: flex; justify-content: space-between; align-items: center; gap: 1rem;
       transition: color 0.2s;
     }
-    .faq-question:hover { color: var(--orchid); }
-    .faq-chevron { flex-shrink: 0; color: var(--sage-dk); transition: transform 0.3s; font-size: 0.75rem; }
+    .faq-question:hover { color: var(--terracotta); }
+    .faq-chevron { flex-shrink: 0; color: var(--amber); transition: transform 0.3s; font-size: 0.75rem; }
     .faq-item.open .faq-chevron { transform: rotate(180deg); }
     .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding 0.35s; }
     .faq-item.open .faq-answer { max-height: 300px; padding-bottom: 1.4rem; }
     .faq-answer p {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1rem; line-height: 1.85;
-      color: var(--plum);
+      font-size: 1rem; line-height: 1.85; color: #5a4a3a;
     }
 
     /* ═══════════════════════════════════
        FOOTER
     ═══════════════════════════════════ */
     footer {
-      background: var(--midnight);
-      text-align: center;
-      padding: 3rem 2rem;
-      border-top: 1px solid rgba(122,77,148,0.25);
+      background: var(--charcoal);
+      text-align: center; padding: 3rem 2rem;
+      border-top: 1px solid rgba(201,168,76,0.2);
     }
     footer .footer-names {
       font-family: 'Pinyon Script', cursive;
-      font-size: 2.8rem;
-      color: var(--ice);
+      font-size: 2.8rem; color: var(--gold-warm);
       margin-bottom: 0.5rem;
-      text-shadow: 0 0 20px rgba(184,207,224,0.2);
+      text-shadow: 0 0 20px rgba(201,168,76,0.2);
     }
     footer p {
-      font-family: 'IM Fell English', serif;
-      font-style: italic;
-      font-size: 0.68rem;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--ice);
-      opacity: 0.4;
+      font-family: 'IM Fell English', serif; font-style: italic;
+      font-size: 0.68rem; letter-spacing: 0.25em;
+      text-transform: uppercase; color: var(--gold-warm); opacity: 0.45;
     }
 
-    /* ═══════════════════════════════════
-       ANIMATIONS
-    ═══════════════════════════════════ */
-    @keyframes scrollPulse {
-      0%, 100% { opacity: 0.3; transform: scaleY(0.8); }
-      50% { opacity: 1; transform: scaleY(1); }
-    }
-
-    /* ═══════════════════════════════════
-       RESPONSIVE
-    ═══════════════════════════════════ */
     @media (max-width: 600px) {
-      nav { gap: 1.2rem; flex-wrap: wrap; font-size: 0.65rem; }
+      nav { gap: 1.2rem; flex-wrap: wrap; }
       .countdown { gap: 1.4rem; }
       .countdown-num { font-size: 2rem; }
     }
@@ -601,7 +532,6 @@
 </head>
 <body>
 
-  <!-- NAV -->
   <nav>
     <a href="#schedule">Schedule</a>
     <a href="#travel">Travel</a>
@@ -610,181 +540,392 @@
     <a href="#faq">FAQ</a>
   </nav>
 
-  <!-- HERO -->
+  <!-- ═══ HERO ═══ -->
   <section id="hero">
-    <div class="hero-stage"></div>
-    <div class="hero-grain"></div>
+    <div class="hero-sky"></div>
 
-    <!-- SVG Curtain — plum/purple palette folds -->
-    <svg class="hero-curtain-svg" viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <!-- SVG scene: oak trees + Spanish moss + tile border -->
+    <svg class="hero-svg" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <!-- Left curtain: deep plum with purple fold shading -->
-        <linearGradient id="curtainGradLeft" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%"   stop-color="#0d0914"/>
-          <stop offset="7%"   stop-color="#2a1638"/>
-          <stop offset="16%"  stop-color="#3d1f55"/>
-          <stop offset="27%"  stop-color="#4a2468"/>
-          <stop offset="38%"  stop-color="#331645"/>
-          <stop offset="50%"  stop-color="#251030"/>
-          <stop offset="62%"  stop-color="#3a1b50"/>
-          <stop offset="73%"  stop-color="#45205f"/>
-          <stop offset="84%"  stop-color="#2e1340"/>
-          <stop offset="93%"  stop-color="#1a0b22"/>
-          <stop offset="100%" stop-color="#0e0814"/>
+        <!-- Sky gradient (duplicated for SVG internal reference) -->
+        <linearGradient id="skyG" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%"   stop-color="#1a1428"/>
+          <stop offset="15%"  stop-color="#3a2548"/>
+          <stop offset="30%"  stop-color="#7a4a3a"/>
+          <stop offset="50%"  stop-color="#c07840"/>
+          <stop offset="70%"  stop-color="#d4a060"/>
+          <stop offset="85%"  stop-color="#a87040"/>
+          <stop offset="100%" stop-color="#5a3820"/>
         </linearGradient>
-        <!-- Right curtain: mirror -->
-        <linearGradient id="curtainGradRight" x1="100%" y1="0%" x2="0%" y2="0%">
-          <stop offset="0%"   stop-color="#0d0914"/>
-          <stop offset="7%"   stop-color="#2a1638"/>
-          <stop offset="16%"  stop-color="#3d1f55"/>
-          <stop offset="27%"  stop-color="#4a2468"/>
-          <stop offset="38%"  stop-color="#331645"/>
-          <stop offset="50%"  stop-color="#251030"/>
-          <stop offset="62%"  stop-color="#3a1b50"/>
-          <stop offset="73%"  stop-color="#45205f"/>
-          <stop offset="84%"  stop-color="#2e1340"/>
-          <stop offset="93%"  stop-color="#1a0b22"/>
-          <stop offset="100%" stop-color="#0e0814"/>
+        <!-- Water shimmer -->
+        <linearGradient id="waterG" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%"  stop-color="rgba(80,110,160,0)"/>
+          <stop offset="40%" stop-color="rgba(60,95,145,0.7)"/>
+          <stop offset="100%" stop-color="rgba(30,55,100,0.95)"/>
         </linearGradient>
-        <!-- Subtle highlight for fold sheen -->
-        <linearGradient id="foldHighlight" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%"   stop-color="rgba(150,100,210,0)"/>
-          <stop offset="50%"  stop-color="rgba(150,100,210,0.1)"/>
-          <stop offset="100%" stop-color="rgba(150,100,210,0)"/>
+        <!-- Bark gradient for trunks -->
+        <linearGradient id="barkL" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%"  stop-color="#2a1a08"/>
+          <stop offset="40%" stop-color="#4a3018"/>
+          <stop offset="70%" stop-color="#3a2210"/>
+          <stop offset="100%" stop-color="#1e1006"/>
         </linearGradient>
-        <!-- Valance: rich plum -->
-        <linearGradient id="valanceGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%"  stop-color="#1e1030"/>
-          <stop offset="55%" stop-color="#3a1f58"/>
-          <stop offset="100%" stop-color="#251540"/>
+        <linearGradient id="barkR" x1="100%" y1="0%" x2="0%" y2="0%">
+          <stop offset="0%"  stop-color="#2a1a08"/>
+          <stop offset="40%" stop-color="#4a3018"/>
+          <stop offset="70%" stop-color="#3a2210"/>
+          <stop offset="100%" stop-color="#1e1006"/>
         </linearGradient>
-        <!-- Ice blue trim instead of gold -->
-        <linearGradient id="iceTrim" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%"   stop-color="#4a6a80"/>
-          <stop offset="30%"  stop-color="#8ab0c8"/>
-          <stop offset="55%"  stop-color="#b8cfe0"/>
-          <stop offset="80%"  stop-color="#8ab0c8"/>
-          <stop offset="100%" stop-color="#4a6a80"/>
+        <!-- Canopy leaf fill — deep silhouette with golden edge glow -->
+        <radialGradient id="leafGL" cx="70%" cy="40%" r="60%">
+          <stop offset="0%"  stop-color="#1a2a10"/>
+          <stop offset="50%" stop-color="#0e1a08"/>
+          <stop offset="100%" stop-color="#060e04"/>
+        </radialGradient>
+        <radialGradient id="leafGR" cx="30%" cy="40%" r="60%">
+          <stop offset="0%"  stop-color="#1a2a10"/>
+          <stop offset="50%" stop-color="#0e1a08"/>
+          <stop offset="100%" stop-color="#060e04"/>
+        </radialGradient>
+        <!-- Moss colour: silvery-green wisps -->
+        <linearGradient id="mossG" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%"  stop-color="rgba(140,160,120,0.7)"/>
+          <stop offset="100%" stop-color="rgba(100,120,80,0)"/>
         </linearGradient>
-        <!-- Sage green trim accent -->
-        <linearGradient id="sageTrim" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%"   stop-color="#2e4028"/>
-          <stop offset="40%"  stop-color="#6a8e66"/>
-          <stop offset="60%"  stop-color="#7a9e76"/>
-          <stop offset="100%" stop-color="#2e4028"/>
+        <!-- Tile border gradient -->
+        <linearGradient id="tileBase" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%"  stop-color="#f8f0e0"/>
+          <stop offset="100%" stop-color="#e8d8c0"/>
         </linearGradient>
-
-        <filter id="curtainShadow">
-          <feDropShadow dx="0" dy="0" stdDeviation="20" flood-color="#000" flood-opacity="0.75"/>
+        <!-- Star/glow filter for golden warm edge on trees -->
+        <filter id="treeGlow" x="-5%" y="-5%" width="110%" height="110%">
+          <feGaussianBlur stdDeviation="4" result="blur"/>
+          <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+        </filter>
+        <filter id="mossBlur">
+          <feGaussianBlur stdDeviation="1.2"/>
+        </filter>
+        <filter id="softShadow">
+          <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#000" flood-opacity="0.5"/>
         </filter>
       </defs>
 
-      <!-- Left curtain panel -->
-      <g class="curtain-left" filter="url(#curtainShadow)">
-        <path d="M0,0 L500,0 L500,700 C480,693 460,700 440,696 C420,700 400,692 380,698 C360,700 340,691 320,697 C300,700 280,692 260,697 C240,700 220,692 200,696 C180,700 160,691 140,696 C120,700 100,692 80,697 C60,700 40,693 20,698 L0,700 Z"
-              fill="url(#curtainGradLeft)"/>
-        <!-- Fold sheen overlay -->
-        <rect x="0" y="0" width="500" height="700" fill="url(#foldHighlight)" opacity="0.6"/>
-        <!-- Vertical fold lines — dark shadows -->
-        <line x1="42" y1="0" x2="40" y2="700" stroke="rgba(0,0,0,0.45)" stroke-width="3"/>
-        <line x1="84" y1="0" x2="83" y2="700" stroke="rgba(80,40,120,0.2)" stroke-width="2"/>
-        <line x1="126" y1="0" x2="125" y2="700" stroke="rgba(0,0,0,0.38)" stroke-width="3"/>
-        <line x1="168" y1="0" x2="167" y2="700" stroke="rgba(80,40,120,0.18)" stroke-width="2"/>
-        <line x1="210" y1="0" x2="209" y2="700" stroke="rgba(0,0,0,0.32)" stroke-width="3"/>
-        <line x1="252" y1="0" x2="251" y2="700" stroke="rgba(80,40,120,0.16)" stroke-width="2"/>
-        <line x1="294" y1="0" x2="293" y2="700" stroke="rgba(0,0,0,0.28)" stroke-width="3"/>
-        <line x1="336" y1="0" x2="335" y2="700" stroke="rgba(80,40,120,0.14)" stroke-width="2"/>
-        <line x1="378" y1="0" x2="377" y2="700" stroke="rgba(0,0,0,0.24)" stroke-width="3"/>
-        <line x1="420" y1="0" x2="419" y2="700" stroke="rgba(80,40,120,0.12)" stroke-width="2"/>
-        <line x1="462" y1="0" x2="461" y2="700" stroke="rgba(0,0,0,0.2)" stroke-width="2"/>
-        <!-- Right-edge darkening -->
-        <rect x="465" y="0" width="35" height="700" fill="rgba(5,3,12,0.55)"/>
-        <!-- Ice blue trim on right edge -->
-        <rect x="493" y="0" width="7" height="700" fill="url(#iceTrim)" opacity="0.7"/>
+      <!-- Sky fill -->
+      <rect width="1200" height="800" fill="url(#skyG)"/>
+
+      <!-- Distant glow on horizon -->
+      <ellipse cx="600" cy="520" rx="400" ry="120" fill="rgba(210,140,60,0.18)"/>
+      <ellipse cx="600" cy="540" rx="260" ry="70"  fill="rgba(230,160,60,0.12)"/>
+
+      <!-- Water -->
+      <rect x="0" y="640" width="1200" height="160" fill="url(#waterG)"/>
+      <!-- Water reflection shimmer lines -->
+      <line x1="300" y1="670" x2="900" y2="670" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+      <line x1="250" y1="685" x2="950" y2="685" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+      <line x1="350" y1="700" x2="850" y2="700" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+      <line x1="200" y1="718" x2="1000" y2="718" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+      <!-- Sun path shimmer on water -->
+      <ellipse cx="600" cy="700" rx="180" ry="30" fill="rgba(200,150,60,0.12)"/>
+
+      <!-- Ground strip -->
+      <rect x="0" y="628" width="1200" height="30" fill="#1a1008"/>
+      <rect x="0" y="620" width="1200" height="14" fill="rgba(30,20,8,0.8)"/>
+
+      <!-- ═══ LEFT OAK TREE ═══ -->
+      <!-- Main trunk — wide, gnarled, old -->
+      <path d="M 30,800 C 35,720 50,680 60,640 C 65,620 72,600 80,580 C 88,560 92,530 95,500
+               C 98,470 100,440 105,410 C 108,390 112,370 120,350 C 128,330 138,315 150,300
+               L 145,300 C 132,314 122,330 114,350 C 106,370 102,390 100,410 C 96,440 94,470 92,500
+               C 89,530 85,560 78,580 C 70,600 64,620 59,640 C 49,680 34,720 28,800 Z"
+            fill="url(#barkL)"/>
+      <!-- Secondary trunk splits -->
+      <path d="M 95,460 C 80,400 60,350 40,300 C 30,270 25,240 30,210
+               L 35,212 C 31,240 36,268 46,298 C 66,348 86,398 100,458 Z"
+            fill="url(#barkL)"/>
+      <path d="M 105,380 C 130,310 160,250 190,190 C 200,170 208,148 210,125
+               L 215,127 C 213,150 205,172 195,192 C 165,252 135,312 110,382 Z"
+            fill="url(#barkL)"/>
+      <path d="M 110,350 C 145,300 170,250 185,200
+               L 190,203 C 175,253 150,303 114,353 Z"
+            fill="#2e1a0a" opacity="0.5"/>
+
+      <!-- Left canopy — sprawling irregular silhouette -->
+      <path d="M -80,0 C -40,-20 10,-30 40,-40 C 80,-50 120,-40 150,-20
+               C 180,0 200,30 220,60 C 240,90 250,120 255,150
+               C 260,180 258,210 250,240 C 242,270 225,295 205,315
+               C 185,335 160,348 140,355 C 120,362 95,365 75,358
+               C 55,351 35,338 20,322 C 5,306 -5,288 -10,268
+               C -15,248 -12,225 -8,202 C -4,179 2,157 0,135
+               C -2,113 -10,92 -20,72 C -30,52 -55,25 -80,0 Z"
+            fill="url(#leafGL)" filter="url(#treeGlow)"/>
+      <!-- More canopy lobes for irregular silhouette -->
+      <path d="M 30,-20 C 70,-60 130,-80 180,-70 C 230,-60 270,-30 295,10
+               C 320,50 325,100 310,145 C 295,190 265,225 235,248
+               C 205,271 172,282 148,278 C 124,274 105,258 92,240
+               C 79,222 74,200 76,178 C 78,156 88,135 100,118
+               C 112,101 126,90 138,76 C 150,62 158,46 155,28
+               C 152,10 138,-8 120,-16 C 102,-24 70,-22 50,-14
+               L 30,-20 Z"
+            fill="#0a1606" opacity="0.85"/>
+      <path d="M 150,50 C 190,10 240,-10 280,5 C 320,20 345,60 350,105
+               C 355,150 335,195 305,225 C 275,255 238,268 210,262
+               C 182,256 162,238 152,215 C 142,192 144,165 152,142
+               C 160,119 174,100 180,80 C 186,60 178,38 166,28
+               L 150,50 Z"
+            fill="#080e04" opacity="0.7"/>
+
+      <!-- Golden light catching left canopy edges -->
+      <path d="M 250,140 C 260,110 265,78 255,50 C 245,22 220,5 195,-5
+               C 215,2 238,20 248,48 C 258,76 253,108 245,138 Z"
+            fill="rgba(210,160,60,0.15)"/>
+
+      <!-- ═══ Spanish Moss — Left tree ═══ -->
+      <!-- Moss hangs as organic wispy strands -->
+      <!-- Branch 1 strands (from upper left) -->
+      <g opacity="0.75" filter="url(#mossBlur)">
+        <path d="M 120,180 C 118,210 115,250 112,295 C 110,330 108,365 110,400" stroke="url(#mossG)" stroke-width="2.5" fill="none"/>
+        <path d="M 130,175 C 129,208 127,248 125,290 C 123,325 122,360 124,395" stroke="url(#mossG)" stroke-width="2" fill="none"/>
+        <path d="M 140,170 C 140,205 139,245 138,288 C 137,325 138,358 140,388" stroke="url(#mossG)" stroke-width="2.5" fill="none"/>
+        <path d="M 155,165 C 157,200 157,242 156,284 C 155,320 155,352 157,380" stroke="url(#mossG)" stroke-width="2" fill="none"/>
+        <path d="M 170,168 C 174,202 175,244 173,286 C 171,322 170,355 173,382" stroke="url(#mossG)" stroke-width="2.5" fill="none"/>
+        <path d="M 188,172 C 193,205 194,245 192,285 C 190,320 188,352 190,378" stroke="url(#mossG)" stroke-width="2" fill="none"/>
+        <path d="M 205,178 C 211,210 213,250 211,288 C 209,323 207,355 210,380" stroke="url(#mossG)" stroke-width="2.5" fill="none"/>
+        <path d="M 222,185 C 229,216 230,255 228,292 C 226,326 224,358 226,382" stroke="url(#mossG)" stroke-width="2" fill="none"/>
+        <path d="M 240,195 C 246,224 247,262 244,298 C 242,330 240,360 242,384" stroke="url(#mossG)" stroke-width="2.5" fill="none"/>
+        <!-- shorter wisps -->
+        <path d="M 108,230 C 105,258 103,290 105,322" stroke="url(#mossG)" stroke-width="1.5" fill="none"/>
+        <path d="M 162,220 C 160,250 159,282 161,314" stroke="url(#mossG)" stroke-width="1.5" fill="none"/>
+        <path d="M 200,215 C 199,245 199,278 201,310" stroke="url(#mossG)" stroke-width="1.5" fill="none"/>
+        <path d="M 230,225 C 230,255 230,287 231,318" stroke="url(#mossG)" stroke-width="1.5" fill="none"/>
+        <!-- horizontal wisp clusters -->
+        <path d="M 90,260 C 110,255 135,258 160,255 C 180,253 200,255 215,258" stroke="rgba(140,155,115,0.4)" stroke-width="1.5" fill="none"/>
+        <path d="M 95,310 C 118,305 144,308 170,305 C 192,303 210,305 225,308" stroke="rgba(140,155,115,0.35)" stroke-width="1.5" fill="none"/>
+        <path d="M 100,360 C 122,355 148,358 173,355 C 193,352 210,354 222,357" stroke="rgba(140,155,115,0.3)" stroke-width="1" fill="none"/>
       </g>
 
-      <!-- Right curtain panel -->
-      <g class="curtain-right" filter="url(#curtainShadow)">
-        <path d="M500,0 L1000,0 L1000,700 L980,698 C960,693 940,700 920,696 C900,700 880,692 860,698 C840,700 820,692 800,697 C780,700 760,692 740,697 C720,700 700,693 680,697 C660,700 640,692 620,697 C600,700 580,692 560,697 C540,700 520,693 510,697 L500,700 Z"
-              fill="url(#curtainGradRight)"/>
-        <rect x="500" y="0" width="500" height="700" fill="url(#foldHighlight)" opacity="0.6"/>
-        <line x1="538" y1="0" x2="539" y2="700" stroke="rgba(0,0,0,0.45)" stroke-width="3"/>
-        <line x1="580" y1="0" x2="581" y2="700" stroke="rgba(80,40,120,0.2)" stroke-width="2"/>
-        <line x1="622" y1="0" x2="623" y2="700" stroke="rgba(0,0,0,0.38)" stroke-width="3"/>
-        <line x1="664" y1="0" x2="665" y2="700" stroke="rgba(80,40,120,0.18)" stroke-width="2"/>
-        <line x1="706" y1="0" x2="707" y2="700" stroke="rgba(0,0,0,0.32)" stroke-width="3"/>
-        <line x1="748" y1="0" x2="749" y2="700" stroke="rgba(80,40,120,0.16)" stroke-width="2"/>
-        <line x1="790" y1="0" x2="791" y2="700" stroke="rgba(0,0,0,0.28)" stroke-width="3"/>
-        <line x1="832" y1="0" x2="833" y2="700" stroke="rgba(80,40,120,0.14)" stroke-width="2"/>
-        <line x1="874" y1="0" x2="875" y2="700" stroke="rgba(0,0,0,0.24)" stroke-width="3"/>
-        <line x1="916" y1="0" x2="917" y2="700" stroke="rgba(80,40,120,0.12)" stroke-width="2"/>
-        <line x1="958" y1="0" x2="959" y2="700" stroke="rgba(0,0,0,0.2)" stroke-width="2"/>
-        <rect x="500" y="0" width="35" height="700" fill="rgba(5,3,12,0.55)"/>
-        <!-- Ice blue trim on left edge -->
-        <rect x="500" y="0" width="7" height="700" fill="url(#iceTrim)" opacity="0.7"/>
+      <!-- ═══ RIGHT OAK TREE ═══ -->
+      <!-- Main trunk -->
+      <path d="M 1170,800 C 1165,720 1150,680 1140,640 C 1135,620 1128,600 1120,580
+               C 1112,560 1108,530 1105,500 C 1102,470 1100,440 1095,410
+               C 1092,390 1088,370 1080,350 C 1072,330 1062,315 1050,300
+               L 1055,300 C 1068,314 1078,330 1086,350 C 1094,370 1098,390 1101,410
+               C 1105,440 1107,470 1109,500 C 1112,530 1116,560 1122,580
+               C 1130,600 1136,620 1141,640 C 1151,680 1166,720 1172,800 Z"
+            fill="url(#barkR)"/>
+      <path d="M 1105,460 C 1120,400 1140,350 1160,300 C 1170,270 1175,240 1170,210
+               L 1165,212 C 1169,240 1164,268 1154,298 C 1134,348 1114,398 1100,458 Z"
+            fill="url(#barkR)"/>
+      <path d="M 1095,380 C 1070,310 1040,250 1010,190 C 1000,170 992,148 990,125
+               L 985,127 C 987,150 995,172 1005,192 C 1035,252 1065,312 1090,382 Z"
+            fill="url(#barkR)"/>
+
+      <!-- Right canopy — mirror silhouette -->
+      <path d="M 1280,0 C 1240,-20 1190,-30 1160,-40 C 1120,-50 1080,-40 1050,-20
+               C 1020,0 1000,30 980,60 C 960,90 950,120 945,150
+               C 940,180 942,210 950,240 C 958,270 975,295 995,315
+               C 1015,335 1040,348 1060,355 C 1080,362 1105,365 1125,358
+               C 1145,351 1165,338 1180,322 C 1195,306 1205,288 1210,268
+               C 1215,248 1212,225 1208,202 C 1204,179 1198,157 1200,135
+               C 1202,113 1210,92 1220,72 C 1230,52 1255,25 1280,0 Z"
+            fill="url(#leafGR)" filter="url(#treeGlow)"/>
+      <path d="M 1170,-20 C 1130,-60 1070,-80 1020,-70 C 970,-60 930,-30 905,10
+               C 880,50 875,100 890,145 C 905,190 935,225 965,248
+               C 995,271 1028,282 1052,278 C 1076,274 1095,258 1108,240
+               C 1121,222 1126,200 1124,178 C 1122,156 1112,135 1100,118
+               C 1088,101 1074,90 1062,76 C 1050,62 1042,46 1045,28
+               C 1048,10 1062,-8 1080,-16 C 1098,-24 1130,-22 1150,-14 L 1170,-20 Z"
+            fill="#0a1606" opacity="0.85"/>
+      <path d="M 1050,50 C 1010,10 960,-10 920,5 C 880,20 855,60 850,105
+               C 845,150 865,195 895,225 C 925,255 962,268 990,262
+               C 1018,256 1038,238 1048,215 C 1058,192 1056,165 1048,142
+               C 1040,119 1026,100 1020,80 C 1014,60 1022,38 1034,28 L 1050,50 Z"
+            fill="#080e04" opacity="0.7"/>
+
+      <!-- Golden light on right canopy -->
+      <path d="M 950,140 C 940,110 935,78 945,50 C 955,22 980,5 1005,-5
+               C 985,2 962,20 952,48 C 942,76 947,108 955,138 Z"
+            fill="rgba(210,160,60,0.15)"/>
+
+      <!-- ═══ Spanish Moss — Right tree ═══ -->
+      <g opacity="0.75" filter="url(#mossBlur)">
+        <path d="M 1080,180 C 1082,210 1085,250 1088,295 C 1090,330 1092,365 1090,400" stroke="url(#mossG)" stroke-width="2.5" fill="none"/>
+        <path d="M 1070,175 C 1071,208 1073,248 1075,290 C 1077,325 1078,360 1076,395" stroke="url(#mossG)" stroke-width="2" fill="none"/>
+        <path d="M 1060,170 C 1060,205 1061,245 1062,288 C 1063,325 1062,358 1060,388" stroke="url(#mossG)" stroke-width="2.5" fill="none"/>
+        <path d="M 1045,165 C 1043,200 1043,242 1044,284 C 1045,320 1045,352 1043,380" stroke="url(#mossG)" stroke-width="2" fill="none"/>
+        <path d="M 1030,168 C 1026,202 1025,244 1027,286 C 1029,322 1030,355 1027,382" stroke="url(#mossG)" stroke-width="2.5" fill="none"/>
+        <path d="M 1012,172 C 1007,205 1006,245 1008,285 C 1010,320 1012,352 1010,378" stroke="url(#mossG)" stroke-width="2" fill="none"/>
+        <path d="M 995,178 C 989,210 987,250 989,288 C 991,323 993,355 990,380" stroke="url(#mossG)" stroke-width="2.5" fill="none"/>
+        <path d="M 978,185 C 971,216 970,255 972,292 C 974,326 976,358 974,382" stroke="url(#mossG)" stroke-width="2" fill="none"/>
+        <path d="M 960,195 C 954,224 953,262 956,298 C 958,330 960,360 958,384" stroke="url(#mossG)" stroke-width="2.5" fill="none"/>
+        <path d="M 1092,230 C 1095,258 1097,290 1095,322" stroke="url(#mossG)" stroke-width="1.5" fill="none"/>
+        <path d="M 1038,220 C 1040,250 1041,282 1039,314" stroke="url(#mossG)" stroke-width="1.5" fill="none"/>
+        <path d="M 1000,215 C 1001,245 1001,278 999,310" stroke="url(#mossG)" stroke-width="1.5" fill="none"/>
+        <path d="M 970,225 C 970,255 970,287 969,318" stroke="url(#mossG)" stroke-width="1.5" fill="none"/>
+        <path d="M 1110,260 C 1090,255 1065,258 1040,255 C 1020,253 1000,255 985,258" stroke="rgba(140,155,115,0.4)" stroke-width="1.5" fill="none"/>
+        <path d="M 1105,310 C 1082,305 1056,308 1030,305 C 1008,303 990,305 975,308" stroke="rgba(140,155,115,0.35)" stroke-width="1.5" fill="none"/>
+        <path d="M 1100,360 C 1078,355 1052,358 1027,355 C 1007,352 990,354 978,357" stroke="rgba(140,155,115,0.3)" stroke-width="1" fill="none"/>
       </g>
 
-      <!-- Valance — stays fixed across top -->
-      <path d="M0,0 L1000,0 L1000,88 C950,108 900,82 850,102 C800,118 750,88 700,110 C650,126 600,96 550,116 C510,130 490,130 450,116 C400,96 350,126 300,110 C250,88 200,118 150,102 C100,82 50,108 0,88 Z"
-            fill="url(#valanceGrad)"/>
-      <!-- Valance depth shadow -->
-      <path d="M0,86 C50,106 100,80 150,100 C200,116 250,86 300,108 C350,124 400,94 450,114 C490,128 510,128 550,114 C600,94 650,124 700,108 C750,86 800,116 850,100 C900,80 950,106 1000,86 L1000,104 C950,124 900,98 850,118 C800,134 750,104 700,126 C650,142 600,112 550,132 C510,146 490,146 450,132 C400,112 350,142 300,126 C250,104 200,134 150,118 C100,98 50,124 0,104 Z"
-            fill="rgba(0,0,0,0.35)"/>
-      <!-- Ice blue trim along valance lower edge -->
-      <path d="M0,86 C50,106 100,80 150,100 C200,116 250,86 300,108 C350,124 400,94 450,114 C490,128 510,128 550,114 C600,94 650,124 700,108 C750,86 800,116 850,100 C900,80 950,106 1000,86"
-            fill="none" stroke="url(#iceTrim)" stroke-width="2.5" opacity="0.85"/>
-      <!-- Sage accent line just below ice trim -->
-      <path d="M0,90 C50,110 100,84 150,104 C200,120 250,90 300,112 C350,128 400,98 450,118 C490,132 510,132 550,118 C600,98 650,128 700,112 C750,90 800,120 850,104 C900,84 950,110 1000,90"
-            fill="none" stroke="url(#sageTrim)" stroke-width="1.5" opacity="0.5"/>
-
-      <!-- Tassel pendants at valance dips — ice blue -->
-      <g opacity="0.8">
-        <line x1="500" y1="130" x2="500" y2="162" stroke="url(#iceTrim)" stroke-width="1.5"/>
-        <circle cx="500" cy="167" r="5" fill="#8ab0c8"/>
-        <line x1="300" y1="111" x2="300" y2="140" stroke="url(#iceTrim)" stroke-width="1.5"/>
-        <circle cx="300" cy="145" r="4" fill="#8ab0c8"/>
-        <line x1="150" y1="101" x2="150" y2="128" stroke="url(#iceTrim)" stroke-width="1.5"/>
-        <circle cx="150" cy="133" r="4" fill="#8ab0c8"/>
-        <line x1="700" y1="111" x2="700" y2="140" stroke="url(#iceTrim)" stroke-width="1.5"/>
-        <circle cx="700" cy="145" r="4" fill="#8ab0c8"/>
-        <line x1="850" y1="101" x2="850" y2="128" stroke="url(#iceTrim)" stroke-width="1.5"/>
-        <circle cx="850" cy="133" r="4" fill="#8ab0c8"/>
+      <!-- Overhanging branches toward center -->
+      <!-- Left branch arching right -->
+      <path d="M 200,250 C 280,230 380,220 480,228 C 560,234 640,248 700,260"
+            stroke="#2a1a08" stroke-width="12" fill="none"/>
+      <path d="M 200,250 C 280,230 380,220 480,228 C 560,234 640,248 700,260"
+            stroke="#3a2410" stroke-width="6" fill="none" opacity="0.5"/>
+      <!-- Moss on overhanging branch -->
+      <g opacity="0.6" filter="url(#mossBlur)">
+        <path d="M 280,232 C 280,255 279,280 278,305" stroke="url(#mossG)" stroke-width="2" fill="none"/>
+        <path d="M 320,228 C 321,252 321,277 320,302" stroke="url(#mossG)" stroke-width="2" fill="none"/>
+        <path d="M 360,226 C 362,250 362,275 361,300" stroke="url(#mossG)" stroke-width="2.5" fill="none"/>
+        <path d="M 400,226 C 403,250 403,275 402,300" stroke="url(#mossG)" stroke-width="2" fill="none"/>
+        <path d="M 440,228 C 444,252 444,277 442,302" stroke="url(#mossG)" stroke-width="2" fill="none"/>
+        <path d="M 480,230 C 484,254 484,279 482,304" stroke="url(#mossG)" stroke-width="2.5" fill="none"/>
+        <path d="M 520,234 C 524,258 524,283 522,308" stroke="url(#mossG)" stroke-width="2" fill="none"/>
+        <path d="M 560,240 C 563,264 562,289 560,314" stroke="url(#mossG)" stroke-width="2" fill="none"/>
+        <path d="M 600,248 C 602,272 601,297 599,322" stroke="url(#mossG)" stroke-width="2.5" fill="none"/>
+        <path d="M 640,254 C 641,278 640,303 638,328" stroke="url(#mossG)" stroke-width="2" fill="none"/>
+        <path d="M 675,260 C 675,284 674,309 672,333" stroke="url(#mossG)" stroke-width="2" fill="none"/>
       </g>
 
-      <!-- Top border: sage then ice -->
-      <rect x="0" y="0" width="1000" height="3" fill="url(#sageTrim)" opacity="0.6"/>
-      <rect x="0" y="3" width="1000" height="2" fill="url(#iceTrim)" opacity="0.7"/>
+      <!-- Right branch arching left -->
+      <path d="M 1000,250 C 920,230 820,220 720,228 C 640,234 560,248 500,260"
+            stroke="#2a1a08" stroke-width="12" fill="none"/>
+      <path d="M 1000,250 C 920,230 820,220 720,228 C 640,234 560,248 500,260"
+            stroke="#3a2410" stroke-width="6" fill="none" opacity="0.5"/>
+      <!-- Moss on right overhanging branch -->
+      <g opacity="0.6" filter="url(#mossBlur)">
+        <path d="M 920,232 C 920,256 920,281 919,306" stroke="url(#mossG)" stroke-width="2" fill="none"/>
+        <path d="M 880,228 C 879,252 879,277 880,302" stroke="url(#mossG)" stroke-width="2.5" fill="none"/>
+        <path d="M 840,226 C 838,250 838,275 839,300" stroke="url(#mossG)" stroke-width="2" fill="none"/>
+        <path d="M 800,226 C 797,250 797,275 798,300" stroke="url(#mossG)" stroke-width="2.5" fill="none"/>
+        <path d="M 760,228 C 756,252 756,277 758,302" stroke="url(#mossG)" stroke-width="2" fill="none"/>
+        <path d="M 720,230 C 716,254 716,279 718,304" stroke="url(#mossG)" stroke-width="2.5" fill="none"/>
+        <path d="M 680,234 C 676,258 676,283 678,308" stroke="url(#mossG)" stroke-width="2" fill="none"/>
+        <path d="M 640,240 C 637,264 638,289 640,314" stroke="url(#mossG)" stroke-width="2" fill="none"/>
+        <path d="M 600,248 C 598,272 599,297 601,322" stroke="url(#mossG)" stroke-width="2.5" fill="none"/>
+        <path d="M 565,254 C 564,278 565,303 567,328" stroke="url(#mossG)" stroke-width="2" fill="none"/>
+        <path d="M 528,260 C 528,284 529,309 531,333" stroke="url(#mossG)" stroke-width="2" fill="none"/>
+      </g>
+
+      <!-- ═══ MOSAIC TILE BORDER — bottom of hero ═══ -->
+      <!-- Tile band background -->
+      <rect x="0" y="608" width="1200" height="28" fill="#e8d4a8"/>
+      <rect x="0" y="608" width="1200" height="2"  fill="#8b5e28"/>
+      <rect x="0" y="634" width="1200" height="2"  fill="#8b5e28"/>
+
+      <!-- Repeating tile pattern: cobalt blue border + white centre + flower motif -->
+      <!-- We'll do 40px-wide tiles across the 1200px band = 30 tiles -->
+      <g id="tile-row">
+        <!-- Single tile template at x=0 -->
+        <!-- cobalt outer border -->
+        <rect x="1"   y="610" width="38" height="24" rx="1" fill="#2a4a8a"/>
+        <!-- cream inner -->
+        <rect x="3"   y="612" width="34" height="20" rx="1" fill="#f5ede0"/>
+        <!-- floral motif: centre dot + 4 petals -->
+        <circle cx="20" cy="622" r="2.5" fill="#2a4a8a"/>
+        <!-- petals at NSEW -->
+        <ellipse cx="20" cy="617" rx="2" ry="3" fill="#c84040" opacity="0.9"/>
+        <ellipse cx="20" cy="627" rx="2" ry="3" fill="#c84040" opacity="0.9"/>
+        <ellipse cx="15" cy="622" rx="3" ry="2" fill="#4a8a3a" opacity="0.9"/>
+        <ellipse cx="25" cy="622" rx="3" ry="2" fill="#4a8a3a" opacity="0.9"/>
+        <!-- diagonal accent dots -->
+        <circle cx="15" cy="616" r="1.5" fill="#d4a020" opacity="0.8"/>
+        <circle cx="25" cy="616" r="1.5" fill="#d4a020" opacity="0.8"/>
+        <circle cx="15" cy="628" r="1.5" fill="#4090c0" opacity="0.8"/>
+        <circle cx="25" cy="628" r="1.5" fill="#4090c0" opacity="0.8"/>
+      </g>
+
+      <!-- Repeat tile across width using use elements -->
+      <use href="#tile-row" x="0"/>
+      <use href="#tile-row" x="40"/>
+      <use href="#tile-row" x="80"/>
+      <use href="#tile-row" x="120"/>
+      <use href="#tile-row" x="160"/>
+      <use href="#tile-row" x="200"/>
+      <use href="#tile-row" x="240"/>
+      <use href="#tile-row" x="280"/>
+      <use href="#tile-row" x="320"/>
+      <use href="#tile-row" x="360"/>
+      <use href="#tile-row" x="400"/>
+      <use href="#tile-row" x="440"/>
+      <use href="#tile-row" x="480"/>
+      <use href="#tile-row" x="520"/>
+      <use href="#tile-row" x="560"/>
+      <use href="#tile-row" x="600"/>
+      <use href="#tile-row" x="640"/>
+      <use href="#tile-row" x="680"/>
+      <use href="#tile-row" x="720"/>
+      <use href="#tile-row" x="760"/>
+      <use href="#tile-row" x="800"/>
+      <use href="#tile-row" x="840"/>
+      <use href="#tile-row" x="880"/>
+      <use href="#tile-row" x="920"/>
+      <use href="#tile-row" x="960"/>
+      <use href="#tile-row" x="1000"/>
+      <use href="#tile-row" x="1040"/>
+      <use href="#tile-row" x="1080"/>
+      <use href="#tile-row" x="1120"/>
+      <use href="#tile-row" x="1160"/>
+
+      <!-- Grout lines between tiles -->
+      <g stroke="#8b6a30" stroke-width="0.5" opacity="0.6">
+        <line x1="40"  y1="610" x2="40"  y2="636"/>
+        <line x1="80"  y1="610" x2="80"  y2="636"/>
+        <line x1="120" y1="610" x2="120" y2="636"/>
+        <line x1="160" y1="610" x2="160" y2="636"/>
+        <line x1="200" y1="610" x2="200" y2="636"/>
+        <line x1="240" y1="610" x2="240" y2="636"/>
+        <line x1="280" y1="610" x2="280" y2="636"/>
+        <line x1="320" y1="610" x2="320" y2="636"/>
+        <line x1="360" y1="610" x2="360" y2="636"/>
+        <line x1="400" y1="610" x2="400" y2="636"/>
+        <line x1="440" y1="610" x2="440" y2="636"/>
+        <line x1="480" y1="610" x2="480" y2="636"/>
+        <line x1="520" y1="610" x2="520" y2="636"/>
+        <line x1="560" y1="610" x2="560" y2="636"/>
+        <line x1="600" y1="610" x2="600" y2="636"/>
+        <line x1="640" y1="610" x2="640" y2="636"/>
+        <line x1="680" y1="610" x2="680" y2="636"/>
+        <line x1="720" y1="610" x2="720" y2="636"/>
+        <line x1="760" y1="610" x2="760" y2="636"/>
+        <line x1="800" y1="610" x2="800" y2="636"/>
+        <line x1="840" y1="610" x2="840" y2="636"/>
+        <line x1="880" y1="610" x2="880" y2="636"/>
+        <line x1="920" y1="610" x2="920" y2="636"/>
+        <line x1="960" y1="610" x2="960" y2="636"/>
+        <line x1="1000" y1="610" x2="1000" y2="636"/>
+        <line x1="1040" y1="610" x2="1040" y2="636"/>
+        <line x1="1080" y1="610" x2="1080" y2="636"/>
+        <line x1="1120" y1="610" x2="1120" y2="636"/>
+        <line x1="1160" y1="610" x2="1160" y2="636"/>
+      </g>
+
+      <!-- Atmospheric haze in tree gap — centres the stage feeling -->
+      <ellipse cx="600" cy="400" rx="300" ry="200" fill="rgba(180,120,50,0.06)"/>
     </svg>
 
-    <div class="curtain-floor"></div>
+    <div class="hero-water"></div>
+    <div class="hero-ground"></div>
 
-    <!-- Content -->
+    <!-- Text content -->
     <div class="hero-content">
       <p class="hero-eyebrow">You are cordially invited</p>
 
       <div class="hero-rule">
         <div class="hero-rule-line"></div>
-        <span class="hero-rule-ornament">✦</span>
+        <div class="hero-rule-diamond"></div>
         <div class="hero-rule-line"></div>
       </div>
 
-      <h1 class="hero-names">
-        Megan <span class="hero-ampersand">&amp;</span> Ben
-      </h1>
+      <h1 class="hero-names">Megan <span class="hero-ampersand">&amp;</span> Ben</h1>
 
       <div class="hero-divider">
-        <div class="hero-divider-thick"></div>
-        <div class="hero-divider-thin"></div>
+        <div class="hero-div-thick"></div>
+        <div class="hero-div-thin"></div>
       </div>
 
       <p class="hero-date">03 &nbsp;·&nbsp; 13 &nbsp;·&nbsp; 2027</p>
       <p class="hero-venue">The White Room · St. Augustine, Florida</p>
-
-      <div class="hero-bottom-rule">
-        <div class="hero-rule-line"></div>
-        <span class="hero-rule-ornament">✦</span>
-        <div class="hero-rule-line"></div>
-      </div>
 
       <div class="countdown">
         <div class="countdown-unit"><div class="countdown-num" id="cd-days">—</div><div class="countdown-label">Days</div></div>
@@ -821,18 +962,15 @@
       <div class="section-rule-double"><div class="srd-thick"></div><div class="srd-thin"></div></div>
       <div class="cards">
         <div class="card">
-          <div class="card-icon"></div>
           <div class="card-title">Nearest Airport</div>
           <div class="card-body">Jacksonville International Airport (JAX) is the closest major airport, about 45 minutes from St. Augustine. Daytona Beach (DAB) is also a solid option, roughly an hour south.</div>
         </div>
         <div class="card">
-          <div class="card-icon"></div>
           <div class="card-title">The Venue</div>
           <div class="card-body">The White Room<br>1 King St, St. Augustine, FL 32084<br><br>Parking is available nearby. We recommend arriving 15–20 minutes early.</div>
           <a href="https://maps.google.com/?q=The+White+Room+St+Augustine+FL" target="_blank" class="card-link">Get Directions →</a>
         </div>
         <div class="card">
-          <div class="card-icon"></div>
           <div class="card-title">Where to Stay</div>
           <div class="card-body">
             We recommend staying in Historic Downtown St. Augustine — steps from the venue and all the charm of the city. A few of our favorites:
@@ -845,7 +983,6 @@
           </div>
         </div>
         <div class="card">
-          <div class="card-icon"></div>
           <div class="card-title">Explore St. Augustine</div>
           <div class="card-body">Come early or stay late! St. Augustine is the oldest city in the US — incredible history, beaches, restaurants, and nightlife. A perfect excuse to extend the trip.</div>
         </div>
