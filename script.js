@@ -126,10 +126,13 @@ async function submitRsvp() {
   submitBtn.disabled = true;
 
   try {
+    // NOTE: Content-Type MUST be text/plain (a "simple" header) so the browser
+    // doesn't fire a CORS preflight that Apps Script can't answer. The body is
+    // still JSON — we just parse it on the server side with JSON.parse(e.postData.contents).
     await fetch(SCRIPT_URL, {
       method: 'POST',
       mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify({ code: currentCode, guests, message })
     });
 
