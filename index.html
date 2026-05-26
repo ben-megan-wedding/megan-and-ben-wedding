@@ -50,16 +50,17 @@
 
     /* ── HERO ── */
     
-    .hero-an-ben{
+    .hero-megan-ben{
       display:flex;justify-content:center;align-items:baseline;
       gap:.5rem;margin-bottom:1.2rem;
     }
     .hero-name{
       font-family:'Pinyon Script',cursive;
       font-size:clamp(5rem,13vw,10rem);
-      color:rgba(255,255,255,.15);
+      color:rgba(255,255,255,.92);
       line-height:1;
       letter-spacing:.02em;
+      text-shadow:0 2px 24px rgba(0,0,0,.7);
     }
     .hero-amp{
       font-family:'Cormorant Garamond',serif;
@@ -213,29 +214,30 @@
     .dress-inner{
       min-height:100vh;
       display:grid;
-      grid-template-columns:1fr minmax(0,560px) 1fr;
-      gap:2.5rem;
+      grid-template-columns:1fr minmax(0,500px) 1fr;
+      gap:3rem;
       align-items:center;
-      padding:6rem 2.5rem;
-      max-width:1400px;
+      padding:6rem 3rem;
+      max-width:1500px;
       margin:0 auto;
     }
     .dress-flank{
       display:grid;
       grid-template-rows:1fr 1fr;
-      gap:1rem;
-      height:min(80vh, 720px);
+      gap:1.2rem;
+      height:min(88vh, 820px);
     }
     .dress-photo{
       overflow:hidden;position:relative;
-      border:1px solid rgba(146,147,111,.15);
+      border:1px solid rgba(146,147,111,.2);
+      background:#0e0e04;
     }
     .dress-photo img{
-      width:100%;height:100%;object-fit:cover;display:block;
-      filter:brightness(.78) contrast(1.05) saturate(.92);
+      width:100%;height:100%;object-fit:contain;display:block;
+      filter:brightness(.88) contrast(1.05) saturate(.95);
       transition:transform .6s ease, filter .4s ease;
     }
-    .dress-photo:hover img{transform:scale(1.05);filter:brightness(.95) contrast(1.05) saturate(1)}
+    .dress-photo:hover img{transform:scale(1.03);filter:brightness(1) contrast(1.05) saturate(1)}
     .dress-center{
       display:flex;flex-direction:column;
       align-items:center;justify-content:center;
@@ -445,7 +447,7 @@
 
 <!-- ═══ HOME ═══ -->
 <section class="page" id="home">
-  <div class="page-bg" style="background-image:url('megBen.jpg')"></div>
+  <div class="page-bg" style="background-image:url('MegBen.jpg')"></div>
   <div class="page-overlay" style="background:linear-gradient(180deg, rgba(20,20,4,0.55) 0%, rgba(20,20,4,0.45) 50%, rgba(20,20,4,0.75) 100%)"></div>
   <div class="page-content">
     <div class="hero-megan-ben">
@@ -475,7 +477,7 @@
 
 <!-- ═══ EVENT DETAILS ═══ -->
 <section class="page" id="event">
-  <div class="page-bg" style="background-image:url('oak.jpg')"></div>
+  <div class="page-bg" style="background-image:url('bridge.jpg')"></div>
   <div class="page-overlay" style="background:rgba(20,20,4,0.72)"></div>
   <div class="page-content">
     <p class="section-eyebrow">Join Us</p>
@@ -586,8 +588,8 @@
 
 <!-- ═══ RSVP ═══ -->
 <section class="page" id="rsvp">
-  <div class="page-bg"></div>
-  <div class="page-overlay"></div>
+  <div class="page-bg" style="background-image:url('oak.jpeg')"></div>
+  <div class="page-overlay" style="background:rgba(20,20,4,0.78)"></div>
   <div class="page-content">
     <p class="section-eyebrow">We Hope to See You</p>
     <h2 class="section-title">RSVP</h2>
