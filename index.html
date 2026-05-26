@@ -170,7 +170,13 @@
       display:grid;grid-template-columns:1fr 1fr;
       min-height:100vh;
     }
-    
+    .travel-photo{
+      position:relative;
+      background-image:url('lighthouse.jpg');
+      background-size:cover;
+      background-position:center;
+      min-height:100vh;
+    }
     .travel-photo::after{
       content:'';position:absolute;inset:0;
       background:linear-gradient(to right,transparent 60%,var(--bg));
@@ -205,28 +211,56 @@
     /* ── DRESS CODE ── */
     #dresscode{background:var(--bg-mid)}
     .dress-inner{
-      min-height:100vh;display:flex;flex-direction:column;
-      align-items:center;justify-content:center;padding:6rem 2rem;
+      min-height:100vh;
+      display:grid;
+      grid-template-columns:1fr minmax(0,560px) 1fr;
+      gap:2.5rem;
+      align-items:center;
+      padding:6rem 2.5rem;
+      max-width:1400px;
+      margin:0 auto;
     }
-    .dress-grid{
-      display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
-      width:100%;max-width:1000px;margin-top:2.5rem;
-      background:rgba(146,147,111,.15);
+    .dress-flank{
+      display:grid;
+      grid-template-rows:1fr 1fr;
+      gap:1rem;
+      height:min(80vh, 720px);
     }
     .dress-photo{
-      aspect-ratio:3/4;overflow:hidden;position:relative;
+      overflow:hidden;position:relative;
+      border:1px solid rgba(146,147,111,.15);
     }
     .dress-photo img{
-      width:100%;height:100%;object-fit:cover;
-      filter:brightness(.85) contrast(1.05);
-      transition:transform .5s,filter .4s;
+      width:100%;height:100%;object-fit:cover;display:block;
+      filter:brightness(.78) contrast(1.05) saturate(.92);
+      transition:transform .6s ease, filter .4s ease;
     }
-    .dress-photo:hover img{transform:scale(1.04);filter:brightness(1) contrast(1.05)}
+    .dress-photo:hover img{transform:scale(1.05);filter:brightness(.95) contrast(1.05) saturate(1)}
+    .dress-center{
+      display:flex;flex-direction:column;
+      align-items:center;justify-content:center;
+      text-align:center;
+    }
     .dress-caption{
       font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;
-      color:var(--sage);text-align:center;margin-top:1.2rem;
+      color:var(--sage);text-align:center;margin-top:1.5rem;
     }
-    @media(max-width:640px){.dress-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:900px){
+      .dress-inner{
+        grid-template-columns:1fr;
+        grid-template-areas:"left" "center" "right";
+        gap:1.5rem;padding:5rem 1.5rem;
+      }
+      .dress-flank{
+        grid-template-rows:none;
+        grid-template-columns:1fr 1fr;
+        height:auto;
+      }
+      .dress-photo{aspect-ratio:3/4}
+      .dress-flank-left{grid-area:left}
+      .dress-center-area{grid-area:center}
+      .dress-flank-right{grid-area:right}
+    }
 
     /* ── REGISTRY ── */
     #registry{background:var(--bg)}
@@ -411,8 +445,8 @@
 
 <!-- ═══ HOME ═══ -->
 <section class="page" id="home">
-  <div class="page-bg"></div>
-  <div class="page-overlay"></div>
+  <div class="page-bg" style="background-image:url('MegBen.jpg')"></div>
+  <div class="page-overlay" style="background:linear-gradient(180deg, rgba(20,20,4,0.55) 0%, rgba(20,20,4,0.45) 50%, rgba(20,20,4,0.75) 100%)"></div>
   <div class="page-content">
     <div class="hero-megan-ben">
       <span class="hero-name">Megan</span>
@@ -441,8 +475,8 @@
 
 <!-- ═══ EVENT DETAILS ═══ -->
 <section class="page" id="event">
-  <div class="page-bg"></div>
-  <div class="page-overlay"></div>
+  <div class="page-bg" style="background-image:url('college.jpg')"></div>
+  <div class="page-overlay" style="background:rgba(20,20,4,0.72)"></div>
   <div class="page-content">
     <p class="section-eyebrow">Join Us</p>
     <h2 class="section-title">Event Details</h2>
@@ -515,17 +549,27 @@
 <!-- ═══ DRESS CODE ═══ -->
 <section id="dresscode">
   <div class="dress-inner">
-    <p class="section-eyebrow">What to Wear</p>
-    <h2 class="section-title">Dress Code</h2>
-    <div class="section-rule" style="margin-bottom:1rem">
-      <div class="section-rule-line"></div>
-      <div class="section-rule-diamond"></div>
-      <div class="section-rule-line"></div>
+    <div class="dress-flank dress-flank-left">
+      <div class="dress-photo"><img src="fiennes.jpg" alt=""></div>
+      <div class="dress-photo"><img src="barrymore.jpg" alt=""></div>
     </div>
-    <p style="font-family:'Cormorant Garamond',serif;font-style:italic;color:rgba(255,255,255,.65);font-size:1.05rem;max-width:560px;line-height:1.85">
-      Black tie. We want to see you absolutely <em>stunning</em> — tuxedos, floor-length gowns, and your most dazzling self are strongly encouraged. We will be judging. Lovingly, of course. Please skip white, ivory, and champagne out of respect for the bride.
-    </p>
-    <p class="dress-caption">Look the part. Feel the part.</p>
+    <div class="dress-center dress-center-area">
+      <p class="section-eyebrow">What to Wear</p>
+      <h2 class="section-title">Dress Code</h2>
+      <div class="section-rule" style="margin-bottom:1rem">
+        <div class="section-rule-line"></div>
+        <div class="section-rule-diamond"></div>
+        <div class="section-rule-line"></div>
+      </div>
+      <p style="font-family:'Cormorant Garamond',serif;font-style:italic;color:rgba(255,255,255,.65);font-size:1.05rem;max-width:560px;line-height:1.85">
+        Black tie. We want to see you absolutely <em>stunning</em> — tuxedos, floor-length gowns, and your most dazzling self are strongly encouraged. We will be judging. Lovingly, of course. Please skip white, ivory, and champagne out of respect for the bride.
+      </p>
+      <p class="dress-caption">Look the part. Feel the part.</p>
+    </div>
+    <div class="dress-flank dress-flank-right">
+      <div class="dress-photo"><img src="paltrow.jpg" alt=""></div>
+      <div class="dress-photo"><img src="connery.jpg" alt=""></div>
+    </div>
   </div>
 </section>
 
