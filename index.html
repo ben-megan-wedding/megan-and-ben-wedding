@@ -265,11 +265,12 @@
     }
 
     /* ── REGISTRY ── */
-    #registry{background:var(--bg)}
-    .registry-inner{
-      min-height:100vh;display:flex;flex-direction:column;
-      align-items:center;justify-content:center;padding:6rem 2rem;
-    }
+#registry{background:var(--bg); position:relative; overflow:hidden}
+.registry-inner{
+  position:relative; z-index:2;
+  min-height:100vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;padding:6rem 2rem;
+}
     .registry-text{
       font-family:'Cormorant Garamond',serif;font-style:italic;
       font-size:1.15rem;color:rgba(255,255,255,.65);
@@ -577,6 +578,8 @@
 
 <!-- ═══ REGISTRY ═══ -->
 <section id="registry">
+  <div class="page-bg" style="background-image:url('park.jpg')"></div>
+  <div class="page-overlay" style="background:rgba(20,20,4,0.72)"></div>
   <div class="registry-inner">
     <p class="section-eyebrow">Gifts</p>
     <h2 class="section-title">Registry</h2>
